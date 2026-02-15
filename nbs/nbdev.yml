@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "cjm-transcript-segmentation"
+  site-url: "https://cj-mills.github.io/cjm-transcript-segmentation"
+  description: "FastHTML text segmentation component for transcript decomposition with NLTK sentence splitting, interactive split/merge UI with token selector, and card stack navigation."
+  repo-branch: main
+  repo-url: "https://github.com/cj-mills/cjm-transcript-segmentation"
