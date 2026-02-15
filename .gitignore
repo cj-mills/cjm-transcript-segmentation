@@ -150,3 +150,13 @@ checklink/cookies.txt
 
 # Quarto
 .quarto
+
+
+
+
+# Custom
+/.cjm/
+/runtime/
+/models/
+plugins_test.yaml
+cjm.yaml
