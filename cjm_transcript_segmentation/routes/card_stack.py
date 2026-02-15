@@ -82,6 +82,7 @@ def _build_nav_response(
         urls=urls.card_stack,
         render_card=_make_renderer(urls, is_split_mode=is_split, caret_position=caret_position),
         progress_label="Segment",
+        form_input_name="segment_index",
     )
 
 # %% ../../nbs/routes/card_stack.ipynb #cs-navigate
@@ -109,6 +110,7 @@ def _handle_seg_navigate(
         urls=urls.card_stack,
         render_card=renderer,
         progress_label="Segment",
+        form_input_name="segment_index",
     )
     
     _update_seg_state(state_store, workflow_id, session_id, focused_index=state.focused_index)

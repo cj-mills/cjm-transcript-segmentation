@@ -48,11 +48,11 @@ def create_seg_kb_parts(
     Returns a zone, actions tuple, and modes tuple for assembly into a shared
     ZoneManager by the combined-level keyboard config.
     """
-    # Card stack zone from library
+    # Card stack zone from library — no data_attributes needed since
+    # onCardFocusChange callback updates the card stack's hidden input directly
     card_zone = create_card_stack_focus_zone(
         ids=ids,
         on_focus_change="onCardFocusChange",
-        data_attributes=("segment-index",),
     )
     zone_id = card_zone.id
 
