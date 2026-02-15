@@ -52,6 +52,10 @@ from cjm_fasthtml_interactions.core.state_store import get_session_id
 # State store
 from cjm_workflow_state.state_store import SQLiteWorkflowStateStore
 
+# Plugin system
+from cjm_plugin_system.core.manager import PluginManager
+from cjm_plugin_system.core.scheduling import SafetyScheduler
+
 # Keyboard navigation
 from cjm_fasthtml_keyboard_navigation.core.manager import ZoneManager
 from cjm_fasthtml_keyboard_navigation.components.system import render_keyboard_system
@@ -65,6 +69,7 @@ from cjm_fasthtml_card_stack.core.constants import DEFAULT_VISIBLE_COUNT, DEFAUL
 
 # Segmentation library imports
 from cjm_transcript_segmentation.models import TextSegment, SegmentationUrls
+from cjm_transcript_segmentation.services.segmentation import SegmentationService
 from cjm_transcript_segmentation.html_ids import SegmentationHtmlIds
 from cjm_transcript_segmentation.components.card_stack_config import (
     SEG_CS_CONFIG, SEG_CS_IDS, SEG_CS_BTN_IDS, SEG_TS_IDS,
@@ -88,13 +93,6 @@ from cjm_transcript_segmentation.utils import calculate_segment_stats
 # =============================================================================
 
 SAMPLE_TEXT = """The art of war is of vital importance to the State. It is a matter of life and death, a road either to safety or to ruin. Hence it is a subject of inquiry which can on no account be neglected. The art of war, then, is governed by five constant factors, to be taken into account in one's deliberations. These are: The Moral Law; Heaven; Earth; The Commander; Method and discipline. The Moral Law causes the people to be in complete accord with their ruler, so that they will follow him regardless of their lives and undismayed by any danger. Heaven signifies night and day, cold and heat, times and seasons. Earth comprises distances, great and small; danger and security; open ground and narrow passes; the chances of life and death. The Commander stands for the virtues of wisdom, sincerity, benevolence, courage and strictness. By method and discipline are to be understood the marshaling of the army in its proper subdivisions, the graduations of rank among the officers, the maintenance of roads by which supplies may reach the army, and the control of military expenditure."""
-
-
-def simple_sentence_split(text: str) -> List[str]:
-    """Simple fallback sentence splitter using basic punctuation rules."""
-    import re
-    sentences = re.split(r'(?<=[.!?])\s+', text.strip())
-    return [s.strip() for s in sentences if s.strip()]
 
 
 # =============================================================================
@@ -220,42 +218,6 @@ class MockSourceService:
         )]
 
 
-class MockSegmentationService:
-    """Mock segmentation service using simple sentence splitting."""
-
-    def is_available(self) -> bool:
-        return True
-
-    async def split_combined_sources_async(self, source_blocks: List[Any]) -> List[TextSegment]:
-        """Split source blocks into sentences."""
-        all_segments = []
-        global_index = 0
-
-        for block in source_blocks:
-            sentences = simple_sentence_split(block.text)
-
-            char_pos = 0
-            for sentence in sentences:
-                start_char = block.text.find(sentence, char_pos)
-                end_char = start_char + len(sentence) if start_char >= 0 else None
-
-                segment = TextSegment(
-                    index=global_index,
-                    text=sentence,
-                    source_id=block.id,
-                    source_provider_id=block.provider_id,
-                    start_char=start_char if start_char >= 0 else None,
-                    end_char=end_char,
-                )
-                all_segments.append(segment)
-                global_index += 1
-
-                if start_char >= 0:
-                    char_pos = end_char
-
-        return all_segments
-
-
 # =============================================================================
 # Init Handler Wrapper (Simplified - No Alignment)
 # =============================================================================
@@ -269,7 +231,7 @@ def create_demo_init_wrapper(
         state_store: SQLiteWorkflowStateStore,
         workflow_id: str,
         source_service: MockSourceService,
-        segmentation_service: MockSegmentationService,
+        segmentation_service: SegmentationService,
         request,
         sess,
         urls: SegmentationUrls,
@@ -550,8 +512,31 @@ def main():
 
     print(f"  State store: {temp_db}")
 
+    # -------------------------------------------------------------------------
+    # Set up plugin manager and load NLTK plugin
+    # -------------------------------------------------------------------------
+    print("\n[Plugin System]")
+    plugin_manager = PluginManager(scheduler=SafetyScheduler())
+
+    # Discover plugins from JSON manifests
+    plugin_manager.discover_manifests()
+
+    # Load the NLTK plugin
+    nltk_plugin_name = "cjm-text-plugin-nltk"
+    nltk_meta = plugin_manager.get_discovered_meta(nltk_plugin_name)
+    if nltk_meta:
+        try:
+            success = plugin_manager.load_plugin(nltk_meta, {"language": "english"})
+            status = "loaded" if success else "failed"
+            print(f"  {nltk_plugin_name}: {status}")
+        except Exception as e:
+            print(f"  {nltk_plugin_name}: error - {e}")
+    else:
+        print(f"  {nltk_plugin_name}: not found (will use fallback)")
+
+    # Create services
     source_service = MockSourceService()
-    segmentation_service = MockSegmentationService()
+    segmentation_service = SegmentationService(plugin_manager, nltk_plugin_name)
 
     # Initialize selection state with demo source
     # (Required because init handler reads selected_sources from selection state)
