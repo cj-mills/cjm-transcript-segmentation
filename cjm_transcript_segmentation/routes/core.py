@@ -176,16 +176,3 @@ def _push_history(
     new_history = push_history(history, snapshot, max_history_depth)
     _update_seg_state(state_store, workflow_id, session_id, history=new_history)
     return len(new_history)
-
-
-#| export
-def _get_vad_chunk_count(
-    state_store: WorkflowStateStore,  # The workflow state store
-    workflow_id: str,  # The workflow identifier
-    session_id: str,  # Session identifier string
-) -> int:  # Number of VAD chunks in alignment state
-    """Get VAD chunk count from alignment state for status display."""
-    workflow_state = state_store.get_state(workflow_id, session_id)
-    step_states = workflow_state.get("step_states", {})
-    align_state = step_states.get("alignment", {})
-    return len(align_state.get("vad_chunks", []))
