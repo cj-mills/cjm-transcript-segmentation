@@ -92,7 +92,7 @@ from cjm_transcript_segmentation.utils import calculate_segment_stats
 # Sample Data
 # =============================================================================
 
-SAMPLE_TEXT = """The art of war is of vital importance to the State. It is a matter of life and death, a road either to safety or to ruin. Hence it is a subject of inquiry which can on no account be neglected. The art of war, then, is governed by five constant factors, to be taken into account in one's deliberations. These are: The Moral Law; Heaven; Earth; The Commander; Method and discipline. The Moral Law causes the people to be in complete accord with their ruler, so that they will follow him regardless of their lives and undismayed by any danger. Heaven signifies night and day, cold and heat, times and seasons. Earth comprises distances, great and small; danger and security; open ground and narrow passes; the chances of life and death. The Commander stands for the virtues of wisdom, sincerity, benevolence, courage and strictness. By method and discipline are to be understood the marshaling of the army in its proper subdivisions, the graduations of rank among the officers, the maintenance of roads by which supplies may reach the army, and the control of military expenditure."""
+SAMPLE_TEXT = """November the 10th, Wednesday, 9 p.m. I'm standing in a dark alley. After waiting several hours, the time has come. A woman with long dark hair approaches. I have to act and fast before she realises what has happened. I must find out."""
 
 
 # =============================================================================
