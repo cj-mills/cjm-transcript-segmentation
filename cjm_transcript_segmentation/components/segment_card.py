@@ -6,7 +6,7 @@
 __all__ = ['render_segment_card', 'create_segment_card_renderer']
 
 # %% ../../nbs/components/segment_card.ipynb #c3d4e5f6
-from typing import Any, Callable
+from typing import Any, Callable, Set
 import json
 
 from fasthtml.common import Div, Span, Button, P
@@ -228,6 +228,8 @@ def render_segment_card(
     enter_split_url: str,  # URL to enter split mode
     exit_split_url: str,  # URL to exit split mode
     is_first_segment: bool = False,  # Whether this is the first segment (can't merge)
+    has_boundary_above: bool = False,  # Source boundary exists above this card
+    has_boundary_below: bool = False,  # Source boundary exists below this card
 ) -> Any:  # Segment card component
     """Render a segment card with view or split mode content."""
     is_focused = card_role == "focused"
@@ -245,6 +247,14 @@ def render_segment_card(
     
     # Only show actions on focused cards in view mode
     show_actions = is_focused and not is_split_mode
+    
+    # Boundary borders only on non-focused cards
+    boundary_cls = ""
+    if is_context:
+        if has_boundary_above:
+            boundary_cls = combine_classes(border.t(4), border_dui.neutral)
+        if has_boundary_below:
+            boundary_cls = combine_classes(boundary_cls, border.b(4), border_dui.neutral)
     
     return Div(
         Div(
@@ -275,7 +285,8 @@ def render_segment_card(
             bg_dui.base_100, 
             w.full,
             transition.all,
-            duration(200)
+            duration(200),
+            boundary_cls,
         ),
         data_segment_index=str(segment.index),
         data_card_role=card_role
@@ -289,13 +300,17 @@ def create_segment_card_renderer(
     exit_split_url: str = "",  # URL to exit split mode
     is_split_mode: bool = False,  # Whether split mode is active
     caret_position: int = 0,  # Caret position for split mode (word index)
+    source_boundaries: Set[int] = None,  # Indices where source_id changes
 ) -> Callable:  # Card renderer callback: (item, CardRenderContext) -> FT
     """Create a card renderer callback for segment cards."""
+    boundaries = source_boundaries or set()
+    
     def _render(
         item: Any,  # TextSegment instance
         context: CardRenderContext,  # Render context from card stack library
     ) -> Any:  # Rendered segment card component
         """Render a segment card for the given item and viewport context."""
+        idx = context.index
         return render_segment_card(
             segment=item,
             card_role=context.card_role,
@@ -306,5 +321,7 @@ def create_segment_card_renderer(
             enter_split_url=enter_split_url,
             exit_split_url=exit_split_url,
             is_first_segment=context.is_first,
+            has_boundary_above=(idx in boundaries),
+            has_boundary_below=((idx + 1) in boundaries),
         )
     return _render

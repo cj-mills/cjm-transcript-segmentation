@@ -8,7 +8,7 @@ __all__ = ['DEBUG_SEG_HANDLERS', 'SegInitResult', 'init_workflow_router']
 # %% ../../nbs/routes/handlers.ipynb #dh-imports
 from typing import List, Dict, Any, Tuple, Callable, Optional, NamedTuple
 
-from fasthtml.common import APIRouter
+from fasthtml.common import APIRouter, Script, Div
 
 from cjm_fasthtml_card_stack.core.models import CardStackState
 from cjm_fasthtml_card_stack.core.constants import DEFAULT_VISIBLE_COUNT, DEFAULT_CARD_WIDTH
@@ -19,6 +19,7 @@ from cjm_workflow_state.history import pop_history
 from ..models import TextSegment, SegmentationUrls
 from cjm_transcript_segmentation.components.step_renderer import (
     render_seg_column_body, render_seg_stats, render_toolbar,
+    render_seg_source_position,
 )
 from cjm_transcript_segmentation.components.card_stack_config import (
     SEG_CS_IDS, SEG_TS_IDS,
@@ -40,6 +41,7 @@ from cjm_transcript_segmentation.routes.card_stack import (
     _build_slots_oob, _build_nav_response
 )
 from cjm_transcript_source_select.services.source import SourceService
+from ..html_ids import SegmentationHtmlIds
 
 # Debug flag for segmentation handler tracing (set False in production)
 DEBUG_SEG_HANDLERS = True
@@ -53,7 +55,7 @@ def _build_mutation_response(
     urls:SegmentationUrls,  # URL bundle
     is_split_mode:bool=False,  # Whether split mode is active
     is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
-) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar)
+) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
     """Build the standard OOB response for mutation handlers.
     
     Returns domain-specific OOB elements. The combined layer wrapper
@@ -76,8 +78,9 @@ def _build_mutation_response(
         can_undo=(history_depth > 0), visible_count=visible_count,
         is_auto_mode=is_auto_mode, oob=True,
     )
+    source_pos_oob = render_seg_source_position(segments, focused_index, oob=True)
 
-    return (*nav_response, stats_oob, toolbar_oob)
+    return (*nav_response, stats_oob, toolbar_oob, source_pos_oob)
 
 # %% ../../nbs/routes/handlers.ipynb #u4t7lcufnfg
 class SegInitResult(NamedTuple):
@@ -247,6 +250,31 @@ async def _handle_seg_split(
         is_auto_mode=ctx.is_auto_mode,
     )
 
+# %% ../../nbs/routes/handlers.ipynb #pg4dun6ay0l
+def _build_merge_reject_flash(
+    prev_index:int,  # Index of the segment above the boundary
+    curr_index:int,  # Index of the segment below the boundary
+) -> Div:  # OOB div containing JS that flashes both boundary cards
+    """Build an OOB element that flashes both cards at a source boundary."""
+    prev_id = SegmentationHtmlIds.segment_card(prev_index)
+    curr_id = SegmentationHtmlIds.segment_card(curr_index)
+    return Div(
+        Script(f"""(function() {{
+    var c1 = document.getElementById('{prev_id}');
+    var c2 = document.getElementById('{curr_id}');
+    [c1, c2].forEach(function(c) {{
+        if (c) {{ c.classList.remove('bg-base-100'); c.classList.add('bg-error'); }}
+    }});
+    setTimeout(function() {{
+        [c1, c2].forEach(function(c) {{
+            if (c) {{ c.classList.remove('bg-error'); c.classList.add('bg-base-100'); }}
+        }});
+    }}, 400);
+}})();"""),
+        id=SegmentationHtmlIds.SCRIPT_RUNNER,
+        hx_swap_oob="innerHTML",
+    )
+
 # %% ../../nbs/routes/handlers.ipynb #dh-merge
 def _handle_seg_merge(
     state_store: WorkflowStateStore,  # The workflow state store
@@ -266,6 +294,21 @@ def _handle_seg_merge(
         state = _build_card_stack_state(ctx)
         return _build_slots_oob(ctx.segment_dicts, state, urls)
     
+    # Check source boundary — reject merge across different audio sources
+    prev_segment = TextSegment.from_dict(ctx.segment_dicts[segment_index - 1])
+    curr_segment = TextSegment.from_dict(ctx.segment_dicts[segment_index])
+    
+    if (prev_segment.source_id is not None and
+        curr_segment.source_id is not None and
+        prev_segment.source_id != curr_segment.source_id):
+        if DEBUG_SEG_HANDLERS:
+            print(f"[SEG_HANDLERS] Merge rejected at source boundary: "
+                  f"'{prev_segment.source_id}' != '{curr_segment.source_id}'")
+        state = _build_card_stack_state(ctx)
+        no_op = _build_slots_oob(ctx.segment_dicts, state, urls)
+        flash = _build_merge_reject_flash(segment_index - 1, segment_index)
+        return (*no_op, flash)
+    
     # Push current state to history
     history_depth = _push_history(
         state_store, workflow_id, session_id,
@@ -273,8 +316,6 @@ def _handle_seg_merge(
     )
     
     # Merge segments
-    prev_segment = TextSegment.from_dict(ctx.segment_dicts[segment_index - 1])
-    curr_segment = TextSegment.from_dict(ctx.segment_dicts[segment_index])
     merged = merge_text_segments(prev_segment, curr_segment)
     
     # Build and reindex new segments list

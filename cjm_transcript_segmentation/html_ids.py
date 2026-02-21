@@ -29,6 +29,7 @@ class SegmentationHtmlIds:
     SEG_HEADER = "sd-seg-header"
     SEG_FOOTER = "sd-seg-footer"
     SEG_STATS = "sd-seg-stats"
+    SEG_SOURCE_POSITION = "sd-seg-source-position"  # Source position indicator
 
     # Toolbar
     # (Undo button ID is owned by the keyboard system — see SD_SEG_UNDO_BTN in keyboard_config)
@@ -39,6 +40,9 @@ class SegmentationHtmlIds:
     # Split Mode
     SPLIT_MODE_CONTAINER = "sd-split-mode-container"
     SPLIT_MODE_ACTIONS = "sd-split-mode-actions"
+
+    # Script Runner (for OOB-triggered JS like merge rejection flash)
+    SCRIPT_RUNNER = "sd-seg-script-runner"
 
     @staticmethod
     def segment_card(

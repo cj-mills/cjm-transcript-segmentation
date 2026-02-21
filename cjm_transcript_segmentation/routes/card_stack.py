@@ -6,7 +6,7 @@
 __all__ = ['init_card_stack_router']
 
 # %% ../../nbs/routes/card_stack.ipynb #cs-imports
-from typing import List, Dict, Any, Tuple, Callable
+from typing import List, Dict, Any, Tuple, Set, Callable
 
 from fasthtml.common import APIRouter
 
@@ -30,12 +30,15 @@ from cjm_transcript_segmentation.routes.core import (
     WorkflowStateStore, _to_segments, _load_seg_context, _get_seg_state,
     _build_card_stack_state, _update_seg_state,
 )
+from ..utils import get_source_boundaries, get_source_count
+from ..components.step_renderer import render_seg_source_position
 
 # %% ../../nbs/routes/card_stack.ipynb #cs-builders
 def _make_renderer(
     urls: SegmentationUrls,  # URL bundle
     is_split_mode: bool = False,  # Whether split mode is active
     caret_position: int = 0,  # Caret position for split mode
+    source_boundaries: Set[int] = None,  # Indices where source_id changes
 ) -> Any:  # Card renderer callback
     """Create a segment card renderer with captured URLs and mode state."""
     return create_segment_card_renderer(
@@ -45,6 +48,7 @@ def _make_renderer(
         exit_split_url=urls.exit_split,
         is_split_mode=is_split_mode,
         caret_position=caret_position,
+        source_boundaries=source_boundaries,
     )
 
 # %% ../../nbs/routes/card_stack.ipynb #26ttani5yhu
@@ -56,13 +60,18 @@ def _build_slots_oob(
 ) -> List[Any]:  # OOB slot elements
     """Build OOB slot updates for the viewport sections."""
     is_split = state.active_mode == "split"
+    segments = _to_segments(segment_dicts)
+    boundaries = get_source_boundaries(segments)
     return build_slots_response(
-        card_items=_to_segments(segment_dicts),
+        card_items=segments,
         state=state,
         config=SEG_CS_CONFIG,
         ids=SEG_CS_IDS,
         urls=urls.card_stack,
-        render_card=_make_renderer(urls, is_split_mode=is_split, caret_position=caret_position),
+        render_card=_make_renderer(
+            urls, is_split_mode=is_split, caret_position=caret_position,
+            source_boundaries=boundaries,
+        ),
     )
 
 # %% ../../nbs/routes/card_stack.ipynb #qrd43yuy9h8
@@ -74,13 +83,18 @@ def _build_nav_response(
 ) -> Tuple:  # OOB elements (slots + progress + focus)
     """Build OOB response for navigation and mode changes."""
     is_split = state.active_mode == "split"
+    segments = _to_segments(segment_dicts)
+    boundaries = get_source_boundaries(segments)
     return build_nav_response(
-        card_items=_to_segments(segment_dicts),
+        card_items=segments,
         state=state,
         config=SEG_CS_CONFIG,
         ids=SEG_CS_IDS,
         urls=urls.card_stack,
-        render_card=_make_renderer(urls, is_split_mode=is_split, caret_position=caret_position),
+        render_card=_make_renderer(
+            urls, is_split_mode=is_split, caret_position=caret_position,
+            source_boundaries=boundaries,
+        ),
         progress_label="Segment",
         form_input_name="segment_index",
     )
@@ -92,14 +106,15 @@ def _handle_seg_navigate(
     sess,  # FastHTML session object
     direction: str,  # Navigation direction: "up", "down", "first", "last", "page_up", "page_down"
     urls: SegmentationUrls,  # URL bundle for segmentation routes
-):  # OOB slot updates with progress and focus
+):  # OOB slot updates with progress, focus, and source position
     """Navigate to a different segment in the viewport using OOB slot swaps."""
     session_id = get_session_id(sess)
     ctx = _load_seg_context(state_store, workflow_id, session_id)
     segments = _to_segments(ctx.segment_dicts)
+    boundaries = get_source_boundaries(segments)
     
     state = _build_card_stack_state(ctx)
-    renderer = _make_renderer(urls)
+    renderer = _make_renderer(urls, source_boundaries=boundaries)
     
     result = card_stack_navigate(
         direction=direction,
@@ -114,6 +129,11 @@ def _handle_seg_navigate(
     )
     
     _update_seg_state(state_store, workflow_id, session_id, focused_index=state.focused_index)
+    
+    # Append source position OOB if multiple sources
+    if get_source_count(segments) > 1:
+        source_pos_oob = render_seg_source_position(segments, state.focused_index, oob=True)
+        return (*result, source_pos_oob)
     return result
 
 # %% ../../nbs/routes/card_stack.ipynb #cs-split-mode
@@ -165,9 +185,10 @@ async def _handle_seg_update_viewport(
     session_id = get_session_id(sess)
     ctx = _load_seg_context(state_store, workflow_id, session_id)
     segments = _to_segments(ctx.segment_dicts)
+    boundaries = get_source_boundaries(segments)
     
     state = _build_card_stack_state(ctx)
-    renderer = _make_renderer(urls)
+    renderer = _make_renderer(urls, source_boundaries=boundaries)
     
     result = card_stack_update_viewport(
         visible_count=visible_count,

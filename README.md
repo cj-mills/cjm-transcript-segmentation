@@ -54,36 +54,39 @@ graph LR
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
     components_segment_card --> components_card_stack_config
-    components_segment_card --> models
     components_segment_card --> html_ids
+    components_segment_card --> models
     components_step_renderer --> components_card_stack_config
+    components_step_renderer --> html_ids
+    components_step_renderer --> utils
     components_step_renderer --> components_segment_card
     components_step_renderer --> models
     components_step_renderer --> components_callbacks
-    components_step_renderer --> utils
-    components_step_renderer --> html_ids
     routes_card_stack --> routes_core
-    routes_card_stack --> components_card_stack_config
+    routes_card_stack --> utils
     routes_card_stack --> components_segment_card
+    routes_card_stack --> components_card_stack_config
     routes_card_stack --> models
+    routes_card_stack --> components_step_renderer
     routes_core --> models
-    routes_handlers --> services_segmentation
-    routes_handlers --> routes_core
     routes_handlers --> components_card_stack_config
-    routes_handlers --> utils
+    routes_handlers --> services_segmentation
+    routes_handlers --> html_ids
+    routes_handlers --> routes_core
     routes_handlers --> components_step_renderer
+    routes_handlers --> utils
     routes_handlers --> routes_card_stack
     routes_handlers --> models
-    routes_init --> models
-    routes_init --> routes_core
-    routes_init --> services_segmentation
     routes_init --> routes_handlers
+    routes_init --> services_segmentation
     routes_init --> routes_card_stack
+    routes_init --> routes_core
+    routes_init --> models
     services_segmentation --> models
     utils --> models
 ```
 
-*30 cross-module dependencies detected*
+*33 cross-module dependencies detected*
 
 ## CLI Reference
 
@@ -152,6 +155,7 @@ def _make_renderer(
     urls: SegmentationUrls,  # URL bundle
     is_split_mode: bool = False,  # Whether split mode is active
     caret_position: int = 0,  # Caret position for split mode
+    source_boundaries: Set[int] = None,  # Indices where source_id changes
 ) -> Any:  # Card renderer callback
     "Create a segment card renderer with captured URLs and mode state."
 ```
@@ -183,7 +187,7 @@ def _handle_seg_navigate(
     sess,  # FastHTML session object
     direction: str,  # Navigation direction: "up", "down", "first", "last", "page_up", "page_down"
     urls: SegmentationUrls,  # URL bundle for segmentation routes
-):  # OOB slot updates with progress and focus
+):  # OOB slot updates with progress, focus, and source position
     "Navigate to a different segment in the viewport using OOB slot swaps."
 ```
 
@@ -406,7 +410,7 @@ def _build_mutation_response(
     urls:SegmentationUrls,  # URL bundle
     is_split_mode:bool=False,  # Whether split mode is active
     is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
-) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar)
+) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
     """
     Build the standard OOB response for mutation handlers.
     
@@ -446,6 +450,14 @@ async def _handle_seg_split(
     max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
 ):  # OOB slot updates with stats, progress, focus, and toolbar
     "Split a segment at the specified word position."
+```
+
+``` python
+def _build_merge_reject_flash(
+    prev_index:int,  # Index of the segment above the boundary
+    curr_index:int,  # Index of the segment below the boundary
+) -> Div:  # OOB div containing JS that flashes both boundary cards
+    "Build an OOB element that flashes both cards at a source boundary."
 ```
 
 ``` python
@@ -841,6 +853,7 @@ def create_segment_card_renderer(
     exit_split_url: str = "",  # URL to exit split mode
     is_split_mode: bool = False,  # Whether split mode is active
     caret_position: int = 0,  # Caret position for split mode (word index)
+    source_boundaries: Set[int] = None,  # Indices where source_id changes
 ) -> Callable:  # Card renderer callback: (item, CardRenderContext) -> FT
     "Create a card renderer callback for segment cards."
 ```
@@ -962,6 +975,7 @@ class SegmentationService:
 from cjm_transcript_segmentation.components.step_renderer import (
     render_toolbar,
     render_seg_stats,
+    render_seg_source_position,
     render_seg_column_body,
     render_seg_footer_content,
     render_seg_mini_stats_text
@@ -992,6 +1006,15 @@ def render_seg_stats(
 ```
 
 ``` python
+def render_seg_source_position(
+    segments: List[TextSegment],  # Current segments
+    focused_index: int = 0,  # Currently focused segment index
+    oob: bool = False,  # Whether to render as OOB swap
+) -> Any:  # Source position indicator (empty if single source)
+    "Render source position indicator for the focused segment."
+```
+
+``` python
 def render_seg_column_body(
     segments:List[TextSegment],  # Segments to display
     focused_index:int,  # Currently focused segment index
@@ -1007,8 +1030,8 @@ def render_seg_column_body(
 def render_seg_footer_content(
     segments:List[TextSegment],  # Current segments
     focused_index:int,  # Currently focused segment index
-) -> Any:  # Footer content with progress indicator and stats
-    "Render footer content with progress indicator and segment statistics."
+) -> Any:  # Footer content with progress indicator, source position, and stats
+    "Render footer content with progress indicator, source position, and segment statistics."
 ```
 
 ``` python
@@ -1029,7 +1052,10 @@ def render_seg_mini_stats_text(
 from cjm_transcript_segmentation.utils import (
     count_words,
     word_index_to_char_position,
-    calculate_segment_stats
+    calculate_segment_stats,
+    get_source_boundaries,
+    get_source_count,
+    get_source_position
 )
 ```
 
@@ -1055,4 +1081,36 @@ def calculate_segment_stats(
     segments: List["TextSegment"]  # List of segments to analyze
 ) -> Dict[str, Any]:  # Statistics dictionary with total_words, total_segments
     "Calculate aggregate statistics for a list of segments."
+```
+
+``` python
+def get_source_boundaries(
+    segments: List["TextSegment"],  # Ordered list of segments
+) -> Set[int]:  # Indices where source_id changes from the previous segment
+    """
+    Find indices where source_id changes between adjacent segments.
+    
+    A boundary at index N means segment[N].source_id differs from
+    segment[N-1].source_id. Both must be non-None for a boundary to exist.
+    """
+```
+
+``` python
+def get_source_count(
+    segments: List["TextSegment"],  # Ordered list of segments
+) -> int:  # Number of unique non-None source_ids
+    "Count the number of unique audio sources in the segment list."
+```
+
+``` python
+def get_source_position(
+    segments: List["TextSegment"],  # Ordered list of segments
+    focused_index: int,  # Index of the focused segment
+) -> Optional[int]:  # 1-based position in ordered unique sources, or None
+    """
+    Get the source position (1-based) of the focused segment.
+    
+    Returns which source group the focused segment belongs to,
+    based on order of first appearance.
+    """
 ```

@@ -206,16 +206,23 @@ def render_keyboard_hints_collapsible(
 # =============================================================================
 
 class MockSourceService:
-    """Mock source service that provides static sample data."""
+    """Mock source service that provides static sample data from two audio sources."""
 
     def get_source_blocks(self, selected_sources: List[Dict]) -> List[Any]:
-        """Return sample text as source blocks."""
+        """Return sample text as two source blocks (simulating chunked audio)."""
         from cjm_source_provider.models import SourceBlock
-        return [SourceBlock(
-            id="demo-source",
-            provider_id="demo-provider",
-            text=SAMPLE_TEXT,
-        )]
+        return [
+            SourceBlock(
+                id="demo-source-1",
+                provider_id="demo-provider",
+                text=SAMPLE_TEXT,
+            ),
+            SourceBlock(
+                id="demo-source-2",
+                provider_id="demo-provider",
+                text=SAMPLE_TEXT,
+            ),
+        ]
 
 
 # =============================================================================
@@ -549,7 +556,8 @@ def main():
         if "selection" not in workflow_state["step_states"]:
             workflow_state["step_states"]["selection"] = {
                 "selected_sources": [
-                    {"record_id": "demo-source", "provider_id": "demo-provider"}
+                    {"record_id": "demo-source-1", "provider_id": "demo-provider"},
+                    {"record_id": "demo-source-2", "provider_id": "demo-provider"},
                 ]
             }
             state_store.update_state(workflow_id, session_id, workflow_state)
