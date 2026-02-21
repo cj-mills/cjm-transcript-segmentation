@@ -1,0 +1,634 @@
+[
+  {
+    "objectID": "html_ids.html",
+    "href": "html_ids.html",
+    "title": "html_ids",
+    "section": "",
+    "text": "source\n\nSegmentationHtmlIds\n\ndef SegmentationHtmlIds(\n    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD\n):\n\nHTML ID constants for Phase 2 Left Column: Text Segmentation.",
+    "crumbs": [
+      "html_ids"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html",
+    "href": "routes/card_stack.html",
+    "title": "card_stack",
+    "section": "",
+    "text": "Shared helpers that assemble OOB response tuples for card stack operations.\n\nSlots only — early returns and exit-split-mode (just viewport section swaps)\nNavigation response — navigation and enter-split-mode (slots + progress + focus)",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html#response-builders",
+    "href": "routes/card_stack.html#response-builders",
+    "title": "card_stack",
+    "section": "",
+    "text": "Shared helpers that assemble OOB response tuples for card stack operations.\n\nSlots only — early returns and exit-split-mode (just viewport section swaps)\nNavigation response — navigation and enter-split-mode (slots + progress + focus)",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html#navigation-handler",
+    "href": "routes/card_stack.html#navigation-handler",
+    "title": "card_stack",
+    "section": "Navigation Handler",
+    "text": "Navigation Handler",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html#enterexit-split-mode-handlers",
+    "href": "routes/card_stack.html#enterexit-split-mode-handlers",
+    "title": "card_stack",
+    "section": "Enter/Exit Split Mode Handlers",
+    "text": "Enter/Exit Split Mode Handlers",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html#update-viewport-handler",
+    "href": "routes/card_stack.html#update-viewport-handler",
+    "title": "card_stack",
+    "section": "Update Viewport Handler",
+    "text": "Update Viewport Handler\nHandler for updating the viewport when card count changes. Does a full viewport swap (outerHTML) since the number of slots changes.",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html#save-width-handler",
+    "href": "routes/card_stack.html#save-width-handler",
+    "title": "card_stack",
+    "section": "Save Width Handler",
+    "text": "Save Width Handler\nSaves the card stack width to server state for persistence across page loads.",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/card_stack.html#router-initialization",
+    "href": "routes/card_stack.html#router-initialization",
+    "title": "card_stack",
+    "section": "Router Initialization",
+    "text": "Router Initialization\nCreates the card stack router with navigation, viewport, and split mode routes.\n\nsource\n\ninit_card_stack_router\n\ndef init_card_stack_router(\n    state_store:SQLiteWorkflowStateStore, # The workflow state store\n    workflow_id:str, # The workflow identifier\n    prefix:str, # Route prefix (e.g., \"/workflow/seg/card_stack\")\n    urls:SegmentationUrls, # URL bundle (populated after routes defined)\n)-&gt;Tuple: # (router, route_dict)\n\nInitialize card stack routes for segmentation.",
+    "crumbs": [
+      "routes",
+      "card_stack"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html",
+    "href": "routes/handlers.html",
+    "title": "handlers",
+    "section": "",
+    "text": "Assembles the full OOB response for handlers that mutate segment data. Includes decomposition-specific elements (stats, toolbar) in addition to card stack elements.",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#mutation-response-builder",
+    "href": "routes/handlers.html#mutation-response-builder",
+    "title": "handlers",
+    "section": "",
+    "text": "Assembles the full OOB response for handlers that mutate segment data. Includes decomposition-specific elements (stats, toolbar) in addition to card stack elements.",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#initialize-handler",
+    "href": "routes/handlers.html#initialize-handler",
+    "title": "handlers",
+    "section": "Initialize Handler",
+    "text": "Initialize Handler\n\nsource\n\nSegInitResult\n\ndef SegInitResult(\n    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD\n):\n\nResult from pure segmentation init handler.\nContains domain-specific data for the combined layer wrapper to use when building cross-domain OOB elements (KB system, shared chrome).",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#split-handler",
+    "href": "routes/handlers.html#split-handler",
+    "title": "handlers",
+    "section": "Split Handler",
+    "text": "Split Handler",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#merge-handler",
+    "href": "routes/handlers.html#merge-handler",
+    "title": "handlers",
+    "section": "Merge Handler",
+    "text": "Merge Handler",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#undo-handler",
+    "href": "routes/handlers.html#undo-handler",
+    "title": "handlers",
+    "section": "Undo Handler",
+    "text": "Undo Handler",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#reset-handler",
+    "href": "routes/handlers.html#reset-handler",
+    "title": "handlers",
+    "section": "Reset Handler",
+    "text": "Reset Handler",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#ai-split-handler",
+    "href": "routes/handlers.html#ai-split-handler",
+    "title": "handlers",
+    "section": "AI Split Handler",
+    "text": "AI Split Handler",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "routes/handlers.html#router-initialization",
+    "href": "routes/handlers.html#router-initialization",
+    "title": "handlers",
+    "section": "Router Initialization",
+    "text": "Router Initialization\nCreates the workflow router with init, split, merge, undo, reset, and AI split routes.\n\nsource\n\ninit_workflow_router\n\ndef init_workflow_router(\n    state_store:SQLiteWorkflowStateStore, # The workflow state store\n    workflow_id:str, # The workflow identifier\n    source_service:SourceService, # Service for fetching source blocks\n    segmentation_service:SegmentationService, # Service for NLTK sentence splitting\n    prefix:str, # Route prefix (e.g., \"/workflow/seg/workflow\")\n    urls:SegmentationUrls, # URL bundle (populated after routes defined)\n    max_history_depth:int=50, # Maximum history stack depth\n    handler_init:Callable=None, # Optional wrapped init handler\n    handler_split:Callable=None, # Optional wrapped split handler\n    handler_merge:Callable=None, # Optional wrapped merge handler\n    handler_undo:Callable=None, # Optional wrapped undo handler\n    handler_reset:Callable=None, # Optional wrapped reset handler\n    handler_ai_split:Callable=None, # Optional wrapped ai_split handler\n)-&gt;Tuple: # (router, route_dict)\n\nInitialize workflow routes for segmentation.\nAccepts optional handler overrides for wrapping with cross-domain coordination (e.g., KB system, shared chrome, alignment status).",
+    "crumbs": [
+      "routes",
+      "handlers"
+    ]
+  },
+  {
+    "objectID": "utils.html",
+    "href": "utils.html",
+    "title": "utils",
+    "section": "",
+    "text": "source\n\n\n\ndef count_words(\n    text:str, # Text to count words in\n)-&gt;int: # Word count\n\nCount the number of whitespace-delimited words in text.",
+    "crumbs": [
+      "utils"
+    ]
+  },
+  {
+    "objectID": "utils.html#word-operations",
+    "href": "utils.html#word-operations",
+    "title": "utils",
+    "section": "",
+    "text": "source\n\n\n\ndef count_words(\n    text:str, # Text to count words in\n)-&gt;int: # Word count\n\nCount the number of whitespace-delimited words in text.",
+    "crumbs": [
+      "utils"
+    ]
+  },
+  {
+    "objectID": "utils.html#position-mapping",
+    "href": "utils.html#position-mapping",
+    "title": "utils",
+    "section": "Position Mapping",
+    "text": "Position Mapping\n\nsource\n\nword_index_to_char_position\n\ndef word_index_to_char_position(\n    text:str, # Full text\n    word_index:int, # Word index (0-based, split happens before this word)\n)-&gt;int: # Character position for split\n\nConvert a word index to the character position where a split should occur.",
+    "crumbs": [
+      "utils"
+    ]
+  },
+  {
+    "objectID": "utils.html#segment-statistics",
+    "href": "utils.html#segment-statistics",
+    "title": "utils",
+    "section": "Segment Statistics",
+    "text": "Segment Statistics\n\nsource\n\ncalculate_segment_stats\n\ndef calculate_segment_stats(\n    segments:List, # List of segments to analyze\n)-&gt;Dict: # Statistics dictionary with total_words, total_segments\n\nCalculate aggregate statistics for a list of segments.",
+    "crumbs": [
+      "utils"
+    ]
+  },
+  {
+    "objectID": "utils.html#source-boundaries",
+    "href": "utils.html#source-boundaries",
+    "title": "utils",
+    "section": "Source Boundaries",
+    "text": "Source Boundaries\n\nsource\n\nget_source_boundaries\n\ndef get_source_boundaries(\n    segments:List, # Ordered list of segments\n)-&gt;Set: # Indices where source_id changes from the previous segment\n\nFind indices where source_id changes between adjacent segments.\nA boundary at index N means segment[N].source_id differs from segment[N-1].source_id. Both must be non-None for a boundary to exist.\n\nsource\n\n\nget_source_count\n\ndef get_source_count(\n    segments:List, # Ordered list of segments\n)-&gt;int: # Number of unique non-None source_ids\n\nCount the number of unique audio sources in the segment list.\n\nsource\n\n\nget_source_position\n\ndef get_source_position(\n    segments:List, # Ordered list of segments\n    focused_index:int, # Index of the focused segment\n)-&gt;Optional: # 1-based position in ordered unique sources, or None\n\nGet the source position (1-based) of the focused segment.\nReturns which source group the focused segment belongs to, based on order of first appearance.",
+    "crumbs": [
+      "utils"
+    ]
+  },
+  {
+    "objectID": "utils.html#tests",
+    "href": "utils.html#tests",
+    "title": "utils",
+    "section": "Tests",
+    "text": "Tests\n\nassert count_words(\"\") == 0\nassert count_words(\"hello\") == 1\nassert count_words(\"The art of war\") == 4\nprint(\"count_words tests passed\")\n\n\ntext = \"The art of war is vital\"\n\nassert word_index_to_char_position(text, 0) == 0\nassert word_index_to_char_position(text, 100) == len(text)\nprint(\"word_index_to_char_position tests passed\")\n\n\nfrom cjm_transcript_segmentation.models import TextSegment\n\ntest_segments = [\n    TextSegment(index=0, text=\"The art of war\"),\n    TextSegment(index=1, text=\"is of vital importance\"),\n    TextSegment(index=2, text=\"to the state\"),\n]\n\nstats = calculate_segment_stats(test_segments)\nassert stats[\"total_segments\"] == 3\nassert stats[\"total_words\"] == 11\nprint(\"calculate_segment_stats tests passed\")\n\ncalculate_segment_stats tests passed\n\n\n\n# Test get_source_boundaries\nsegs_single = [\n    TextSegment(index=0, text=\"a\", source_id=\"src1\"),\n    TextSegment(index=1, text=\"b\", source_id=\"src1\"),\n    TextSegment(index=2, text=\"c\", source_id=\"src1\"),\n]\nassert get_source_boundaries(segs_single) == set()\n\nsegs_multi = [\n    TextSegment(index=0, text=\"a\", source_id=\"src1\"),\n    TextSegment(index=1, text=\"b\", source_id=\"src1\"),\n    TextSegment(index=2, text=\"c\", source_id=\"src2\"),\n    TextSegment(index=3, text=\"d\", source_id=\"src2\"),\n    TextSegment(index=4, text=\"e\", source_id=\"src3\"),\n]\nassert get_source_boundaries(segs_multi) == {2, 4}\n\nsegs_none = [\n    TextSegment(index=0, text=\"a\", source_id=\"src1\"),\n    TextSegment(index=1, text=\"b\", source_id=None),\n    TextSegment(index=2, text=\"c\", source_id=\"src2\"),\n]\nassert get_source_boundaries(segs_none) == set()\n\nassert get_source_boundaries([]) == set()\nprint(\"get_source_boundaries tests passed\")\n\n\n# Test get_source_count\nassert get_source_count(segs_single) == 1\nassert get_source_count(segs_multi) == 3\nassert get_source_count(segs_none) == 2\nassert get_source_count([]) == 0\nprint(\"get_source_count tests passed\")\n\n\n# Test get_source_position\nassert get_source_position(segs_multi, 0) == 1  # src1\nassert get_source_position(segs_multi, 1) == 1  # src1\nassert get_source_position(segs_multi, 2) == 2  # src2\nassert get_source_position(segs_multi, 4) == 3  # src3\nassert get_source_position(segs_multi, 99) is None  # out of bounds\nassert get_source_position([], 0) is None\nprint(\"get_source_position tests passed\")",
+    "crumbs": [
+      "utils"
+    ]
+  },
+  {
+    "objectID": "components/step_renderer.html",
+    "href": "components/step_renderer.html",
+    "title": "step_renderer",
+    "section": "",
+    "text": "Workflow-specific toolbar with undo/reset/AI split buttons and segment statistics. Used directly by mutation handlers for OOB swaps (via oob=True) and by the combined step renderer for initial chrome population.\n\nsource\n\n\n\ndef render_toolbar(\n    reset_url:str, # URL for reset action\n    ai_split_url:str, # URL for AI split action\n    undo_url:str, # URL for undo action\n    can_undo:bool, # Whether undo is available\n    visible_count:int=3, # Current visible card count\n    is_auto_mode:bool=False, # Whether card count is in auto-adjust mode\n    oob:bool=False, # Whether to render as OOB swap\n)-&gt;Any: # Toolbar component\n\nRender the segmentation toolbar with action buttons and card count selector.\n\nsource\n\n\n\n\ndef render_seg_stats(\n    segments:List, # Current segments\n    oob:bool=False, # Whether to render as OOB swap\n)-&gt;Any: # Statistics component\n\nRender segmentation statistics.\n\nsource\n\n\n\n\ndef render_seg_source_position(\n    segments:List, # Current segments\n    focused_index:int=0, # Currently focused segment index\n    oob:bool=False, # Whether to render as OOB swap\n)-&gt;Any: # Source position indicator (empty if single source)\n\nRender source position indicator for the focused segment.",
+    "crumbs": [
+      "components",
+      "step_renderer"
+    ]
+  },
+  {
+    "objectID": "components/step_renderer.html#segmentation-toolbar-stats",
+    "href": "components/step_renderer.html#segmentation-toolbar-stats",
+    "title": "step_renderer",
+    "section": "",
+    "text": "Workflow-specific toolbar with undo/reset/AI split buttons and segment statistics. Used directly by mutation handlers for OOB swaps (via oob=True) and by the combined step renderer for initial chrome population.\n\nsource\n\n\n\ndef render_toolbar(\n    reset_url:str, # URL for reset action\n    ai_split_url:str, # URL for AI split action\n    undo_url:str, # URL for undo action\n    can_undo:bool, # Whether undo is available\n    visible_count:int=3, # Current visible card count\n    is_auto_mode:bool=False, # Whether card count is in auto-adjust mode\n    oob:bool=False, # Whether to render as OOB swap\n)-&gt;Any: # Toolbar component\n\nRender the segmentation toolbar with action buttons and card count selector.\n\nsource\n\n\n\n\ndef render_seg_stats(\n    segments:List, # Current segments\n    oob:bool=False, # Whether to render as OOB swap\n)-&gt;Any: # Statistics component\n\nRender segmentation statistics.\n\nsource\n\n\n\n\ndef render_seg_source_position(\n    segments:List, # Current segments\n    focused_index:int=0, # Currently focused segment index\n    oob:bool=False, # Whether to render as OOB swap\n)-&gt;Any: # Source position indicator (empty if single source)\n\nRender source position indicator for the focused segment.",
+    "crumbs": [
+      "components",
+      "step_renderer"
+    ]
+  },
+  {
+    "objectID": "components/step_renderer.html#column-body-renderer",
+    "href": "components/step_renderer.html#column-body-renderer",
+    "title": "step_renderer",
+    "section": "Column Body Renderer",
+    "text": "Column Body Renderer\nRenders the segmentation column content area with viewport and keyboard infrastructure. Called by the combined step renderer (initial page load) and the init handler (HTMX swap).\n\nsource\n\nrender_seg_column_body\n\ndef render_seg_column_body(\n    segments:List, # Segments to display\n    focused_index:int, # Currently focused segment index\n    visible_count:int, # Number of visible cards in viewport\n    card_width:int, # Card stack width in rem\n    urls:SegmentationUrls, # URL bundle for all segmentation routes\n    kb_system:Optional=None, # Rendered keyboard system (None when KB managed externally)\n)-&gt;Any: # Div with id=COLUMN_CONTENT containing viewport + infrastructure\n\nRender the segmentation column content area with card stack viewport.",
+    "crumbs": [
+      "components",
+      "step_renderer"
+    ]
+  },
+  {
+    "objectID": "components/step_renderer.html#shared-chrome-content",
+    "href": "components/step_renderer.html#shared-chrome-content",
+    "title": "step_renderer",
+    "section": "Shared Chrome Content",
+    "text": "Shared Chrome Content\nFunctions that render segmentation-specific content for the shared chrome containers. Used by the combined step renderer for initial page load and by the init handler for OOB swaps.\n\nsource\n\nrender_seg_footer_content\n\ndef render_seg_footer_content(\n    segments:List, # Current segments\n    focused_index:int, # Currently focused segment index\n)-&gt;Any: # Footer content with progress indicator, source position, and stats\n\nRender footer content with progress indicator, source position, and segment statistics.\n\nsource\n\n\nrender_seg_mini_stats_text\n\ndef render_seg_mini_stats_text(\n    segments:List, # Current segments\n)-&gt;str: # Compact stats string for column header badge\n\nGenerate compact stats string for the segmentation column header badge.",
+    "crumbs": [
+      "components",
+      "step_renderer"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html",
+    "href": "components/segment_card.html",
+    "title": "segment_card",
+    "section": "",
+    "text": "Left side of the card showing index and timestamp.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html#card-metadata",
+    "href": "components/segment_card.html#card-metadata",
+    "title": "segment_card",
+    "section": "",
+    "text": "Left side of the card showing index and timestamp.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html#view-mode-content",
+    "href": "components/segment_card.html#view-mode-content",
+    "title": "segment_card",
+    "section": "View Mode Content",
+    "text": "View Mode Content\nStandard text display when card is not in split mode.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html#split-mode-content",
+    "href": "components/segment_card.html#split-mode-content",
+    "title": "segment_card",
+    "section": "Split Mode Content",
+    "text": "Split Mode Content\nInteractive token grid with caret indicator for splitting. Uses the cjm-fasthtml-token-selector library for token rendering and navigation.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html#card-actions",
+    "href": "components/segment_card.html#card-actions",
+    "title": "segment_card",
+    "section": "Card Actions",
+    "text": "Card Actions\nHover-visible action buttons for merge and split.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html#main-card-renderer",
+    "href": "components/segment_card.html#main-card-renderer",
+    "title": "segment_card",
+    "section": "Main Card Renderer",
+    "text": "Main Card Renderer\n\nsource\n\nrender_segment_card\n\ndef render_segment_card(\n    segment:TextSegment, # Segment to render\n    card_role:Literal, # Role of this card in viewport (\"focused\" or \"context\")\n    is_split_mode:bool, # Whether this card is in split mode\n    caret_position:int, # Caret position for split mode (word index)\n    split_url:str, # URL to execute split\n    merge_url:str, # URL to merge with previous\n    enter_split_url:str, # URL to enter split mode\n    exit_split_url:str, # URL to exit split mode\n    is_first_segment:bool=False, # Whether this is the first segment (can't merge)\n    has_boundary_above:bool=False, # Source boundary exists above this card\n    has_boundary_below:bool=False, # Source boundary exists below this card\n)-&gt;Any: # Segment card component\n\nRender a segment card with view or split mode content.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "components/segment_card.html#card-renderer-factory",
+    "href": "components/segment_card.html#card-renderer-factory",
+    "title": "segment_card",
+    "section": "Card Renderer Factory",
+    "text": "Card Renderer Factory\nCreates a card renderer callback that captures split/merge URLs and mode state, compatible with the card stack viewport’s render_card parameter.\n\nsource\n\ncreate_segment_card_renderer\n\ndef create_segment_card_renderer(\n    split_url:str='', # URL to execute split\n    merge_url:str='', # URL to merge with previous\n    enter_split_url:str='', # URL to enter split mode\n    exit_split_url:str='', # URL to exit split mode\n    is_split_mode:bool=False, # Whether split mode is active\n    caret_position:int=0, # Caret position for split mode (word index)\n    source_boundaries:Set=None, # Indices where source_id changes\n)-&gt;Callable: # Card renderer callback: (item, CardRenderContext) -&gt; FT\n\nCreate a card renderer callback for segment cards.",
+    "crumbs": [
+      "components",
+      "segment_card"
+    ]
+  },
+  {
+    "objectID": "models.html",
+    "href": "models.html",
+    "title": "models",
+    "section": "",
+    "text": "Represents a text segment during the workflow before it’s committed to the graph. This is the mutable working copy used during decomposition.\n\nsource\n\n\n\ndef TextSegment(\n    index:int, text:str, source_id:Optional=None, source_provider_id:Optional=None, start_char:Optional=None,\n    end_char:Optional=None\n)-&gt;None:\n\nA text segment during workflow processing before graph commit.",
+    "crumbs": [
+      "models"
+    ]
+  },
+  {
+    "objectID": "models.html#textsegment",
+    "href": "models.html#textsegment",
+    "title": "models",
+    "section": "",
+    "text": "Represents a text segment during the workflow before it’s committed to the graph. This is the mutable working copy used during decomposition.\n\nsource\n\n\n\ndef TextSegment(\n    index:int, text:str, source_id:Optional=None, source_provider_id:Optional=None, start_char:Optional=None,\n    end_char:Optional=None\n)-&gt;None:\n\nA text segment during workflow processing before graph commit.",
+    "crumbs": [
+      "models"
+    ]
+  },
+  {
+    "objectID": "models.html#segmentationstepstate",
+    "href": "models.html#segmentationstepstate",
+    "title": "models",
+    "section": "SegmentationStepState",
+    "text": "SegmentationStepState\nTypedDict for Phase 2 segmentation step state. Provides type safety for the state structure used by the segmentation (left column) step.\n\nsource\n\nSegmentationStepState\n\ndef SegmentationStepState(\n    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD\n):\n\nState for Phase 2 (left column): Text Segmentation.",
+    "crumbs": [
+      "models"
+    ]
+  },
+  {
+    "objectID": "models.html#segmentationurls",
+    "href": "models.html#segmentationurls",
+    "title": "models",
+    "section": "SegmentationUrls",
+    "text": "SegmentationUrls\nURL bundle for Phase 2 segmentation handlers and renderers. Composes CardStackUrls (from cjm-fasthtml-card-stack library) for navigation/viewport operations alongside workflow-specific split, merge, and toolbar URLs.\n\nsource\n\nSegmentationUrls\n\ndef SegmentationUrls(\n    card_stack:CardStackUrls=&lt;factory&gt;, split:str='', merge:str='', enter_split:str='', exit_split:str='',\n    reset:str='', ai_split:str='', undo:str='', init:str=''\n)-&gt;None:\n\nURL bundle for Phase 2 segmentation route handlers and renderers.",
+    "crumbs": [
+      "models"
+    ]
+  },
+  {
+    "objectID": "services/segmentation.html",
+    "href": "services/segmentation.html",
+    "title": "segmentation",
+    "section": "",
+    "text": "This service wraps the NLTK text processing plugin to provide sentence splitting functionality. It converts raw text into TextSegment objects for further refinement in the UI.\n\nsource\n\n\n\ndef SegmentationService(\n    plugin_manager:PluginManager, # Plugin manager for accessing text plugin\n    plugin_name:str='cjm-text-plugin-nltk', # Name of the text processing plugin\n):\n\nService for text segmentation via NLTK plugin.",
+    "crumbs": [
+      "services",
+      "segmentation"
+    ]
+  },
+  {
+    "objectID": "services/segmentation.html#segmentationservice",
+    "href": "services/segmentation.html#segmentationservice",
+    "title": "segmentation",
+    "section": "",
+    "text": "This service wraps the NLTK text processing plugin to provide sentence splitting functionality. It converts raw text into TextSegment objects for further refinement in the UI.\n\nsource\n\n\n\ndef SegmentationService(\n    plugin_manager:PluginManager, # Plugin manager for accessing text plugin\n    plugin_name:str='cjm-text-plugin-nltk', # Name of the text processing plugin\n):\n\nService for text segmentation via NLTK plugin.",
+    "crumbs": [
+      "services",
+      "segmentation"
+    ]
+  },
+  {
+    "objectID": "services/segmentation.html#segment-manipulation-helpers",
+    "href": "services/segmentation.html#segment-manipulation-helpers",
+    "title": "segmentation",
+    "section": "Segment Manipulation Helpers",
+    "text": "Segment Manipulation Helpers\nThese functions support the UI operations for splitting, merging, and reordering segments.\n\nsource\n\nsplit_segment_at_position\n\ndef split_segment_at_position(\n    segment:TextSegment, # Segment to split\n    char_position:int, # Character position to split at (relative to segment text)\n)-&gt;tuple: # Two new segments\n\nSplit a segment into two at the given character position.\n\nsource\n\n\nmerge_text_segments\n\ndef merge_text_segments(\n    first:TextSegment, # First segment (earlier in sequence)\n    second:TextSegment, # Second segment (later in sequence)\n    separator:str=' ', # Text separator between segments\n)-&gt;TextSegment: # Merged segment\n\nMerge two adjacent segments into one.\n\nsource\n\n\nreindex_segments\n\ndef reindex_segments(\n    segments:List, # List of segments to reindex\n)-&gt;List: # Segments with corrected indices\n\nReindex segments to have sequential indices starting from 0.",
+    "crumbs": [
+      "services",
+      "segmentation"
+    ]
+  },
+  {
+    "objectID": "services/segmentation.html#source-block-reconstruction",
+    "href": "services/segmentation.html#source-block-reconstruction",
+    "title": "segmentation",
+    "section": "Source Block Reconstruction",
+    "text": "Source Block Reconstruction\n\nsource\n\nreconstruct_source_blocks\n\ndef reconstruct_source_blocks(\n    segment_dicts:List, # Serialized working segments\n)-&gt;List: # Reconstructed source blocks with combined text\n\nReconstruct source blocks by grouping segments by source_id and combining text.",
+    "crumbs": [
+      "services",
+      "segmentation"
+    ]
+  },
+  {
+    "objectID": "services/segmentation.html#tests",
+    "href": "services/segmentation.html#tests",
+    "title": "segmentation",
+    "section": "Tests",
+    "text": "Tests\nThe following cells demonstrate the segmentation service and helper functions.\n\n# Test split_segment_at_position\nsegment = TextSegment(\n    index=0,\n    text=\"The art of war is of vital importance to the state.\",\n    source_id=\"job_123\",\n    source_provider_id=\"test-plugin\",\n    start_char=0,\n    end_char=51\n)\n\n# Split at position 18 (after \"The art of war is \")\nfirst, second = split_segment_at_position(segment, 18)\nprint(f\"Original: '{segment.text}'\")\nprint(f\"First:    '{first.text}' (chars {first.start_char}-{first.end_char})\")\nprint(f\"Second:   '{second.text}' (chars {second.start_char}-{second.end_char})\")\n\nOriginal: 'The art of war is of vital importance to the state.'\nFirst:    'The art of war is' (chars 0-18)\nSecond:   'of vital importance to the state.' (chars 18-51)\n\n\n\n# Test merge_text_segments\nseg1 = TextSegment(\n    index=0,\n    text=\"The art of war\",\n    source_id=\"job_123\",\n    source_provider_id=\"test-plugin\",\n    start_char=0,\n    end_char=14,\n)\n\nseg2 = TextSegment(\n    index=1,\n    text=\"is of vital importance to the state.\",\n    source_id=\"job_123\",\n    source_provider_id=\"test-plugin\",\n    start_char=15,\n    end_char=51,\n)\n\nmerged = merge_text_segments(seg1, seg2)\nprint(f\"Segment 1: '{seg1.text}'\")\nprint(f\"Segment 2: '{seg2.text}'\")\nprint(f\"Merged:    '{merged.text}'\")\nprint(f\"Char range: {merged.start_char} - {merged.end_char}\")\n\nSegment 1: 'The art of war'\nSegment 2: 'is of vital importance to the state.'\nMerged:    'The art of war is of vital importance to the state.'\nChar range: 0 - 51\n\n\n\n# Test reindex_segments\nsegments = [\n    TextSegment(index=5, text=\"First\"),\n    TextSegment(index=10, text=\"Second\"),\n    TextSegment(index=3, text=\"Third\")\n]\n\nprint(\"Before reindex:\")\nfor s in segments:\n    print(f\"  index={s.index}: '{s.text}'\")\n\nreindex_segments(segments)\n\nprint(\"\\nAfter reindex:\")\nfor s in segments:\n    print(f\"  index={s.index}: '{s.text}'\")\n\nBefore reindex:\n  index=5: 'First'\n  index=10: 'Second'\n  index=3: 'Third'\n\nAfter reindex:\n  index=0: 'First'\n  index=1: 'Second'\n  index=2: 'Third'\n\n\n\n# Test reconstruct_source_blocks\nseg_dicts = [\n    {\"text\": \"First sentence.\", \"source_id\": \"job_1\", \"source_provider_id\": \"provider_a\"},\n    {\"text\": \"Second sentence.\", \"source_id\": \"job_1\", \"source_provider_id\": \"provider_a\"},\n    {\"text\": \"Third sentence.\", \"source_id\": \"job_2\", \"source_provider_id\": \"provider_b\"},\n]\n\nblocks = reconstruct_source_blocks(seg_dicts)\nassert len(blocks) == 2\nassert blocks[0].id == \"job_1\"\nassert blocks[0].provider_id == \"provider_a\"\nassert blocks[0].text == \"First sentence. Second sentence.\"\nassert blocks[1].id == \"job_2\"\nassert blocks[1].text == \"Third sentence.\"\n\n# Empty input\nassert reconstruct_source_blocks([]) == []\n\n# Missing source_id defaults to \"unknown\"\nblocks = reconstruct_source_blocks([{\"text\": \"orphan\"}])\nassert blocks[0].id == \"unknown\"\n\nprint(\"reconstruct_source_blocks tests passed\")\n\nreconstruct_source_blocks tests passed\n\n\n\nSegmentationService with NLTK Plugin\nThese tests require the NLTK plugin to be installed and discoverable.\n\n# Test SegmentationService with NLTK plugin\nfrom pathlib import Path\nfrom cjm_plugin_system.core.manager import PluginManager\n\n# Calculate project root from notebook location (nbs/services/ -&gt; project root)\nproject_root = Path.cwd().parent.parent\nmanifests_dir = project_root / \".cjm\" / \"manifests\"\n\n# Create plugin manager with explicit search path\nmanager = PluginManager(search_paths=[manifests_dir])\nmanager.discover_manifests()\n\nprint(f\"Discovered {len(manager.discovered)} plugins from {manifests_dir}\")\n\n# Check if NLTK plugin is available\nnltk_meta = manager.get_discovered_meta(\"cjm-text-plugin-nltk\")\nif nltk_meta:\n    print(f\"Found plugin: {nltk_meta.name} v{nltk_meta.version}\")\nelse:\n    print(\"NLTK plugin not found - install via plugins.yaml\")\n\n[PluginManager] Discovered manifest: cjm-text-plugin-nltk from /mnt/SN850X_8TB_EXT4/Projects/GitHub/cj-mills/cjm-transcript-segmentation/.cjm/manifests/cjm-text-plugin-nltk.json\n\n\nDiscovered 1 plugins from /mnt/SN850X_8TB_EXT4/Projects/GitHub/cj-mills/cjm-transcript-segmentation/.cjm/manifests\nFound plugin: cjm-text-plugin-nltk v0.0.2\n\n\n\n# Initialize and test SegmentationService\nif nltk_meta:\n    # Load the plugin\n    manager.load_plugin(nltk_meta, {\"language\": \"english\"})\n    \n    seg_service = SegmentationService(manager)\n    print(f\"Plugin available: {seg_service.is_available()}\")\n    \n    # Test sentence splitting (use await directly - Jupyter supports top-level await)\n    test_text = (\n        \"The art of war is of vital importance to the state. \"\n        \"It is a matter of life and death, a road either to safety or to ruin. \"\n        \"Hence it is a subject of inquiry which can on no account be neglected.\"\n    )\n    \n    segments = await seg_service.split_sentences_async(\n        text=test_text,\n        source_id=\"test_job\",\n        source_provider_id=\"test\"\n    )\n    \n    print(f\"\\nSplit into {len(segments)} segments:\")\n    for seg in segments:\n        print(f\"  [{seg.index}] chars {seg.start_char}-{seg.end_char}: '{seg.text[:40]}...'\")\n\n[PluginManager] Launching worker for cjm-text-plugin-nltk...\n\n\n[cjm-text-plugin-nltk] Starting worker on port 33111...\n[cjm-text-plugin-nltk] Logs: /home/innom-dt/.cjm/logs/cjm-text-plugin-nltk.log\n\n\n[PluginManager] HTTP Request: GET http://127.0.0.1:33111/health \"HTTP/1.1 200 OK\"\n\n\n[cjm-text-plugin-nltk] Worker ready.\n\n\n[PluginManager] HTTP Request: POST http://127.0.0.1:33111/initialize \"HTTP/1.1 200 OK\"\n[PluginManager] Loaded plugin: cjm-text-plugin-nltk\n[PluginManager] HTTP Request: POST http://127.0.0.1:33111/execute \"HTTP/1.1 200 OK\"\n\n\nPlugin available: True\n\nSplit into 3 segments:\n  [0] chars 0-51: 'The art of war is of vital importance to...'\n  [1] chars 52-121: 'It is a matter of life and death, a road...'\n  [2] chars 122-192: 'Hence it is a subject of inquiry which c...'\n\n\n\n# Test split_combined_sources_async with multiple source blocks\nfrom cjm_source_provider.models import SourceBlock\n\nif nltk_meta and seg_service.is_available():\n    # Create test source blocks\n    blocks = [\n        SourceBlock(\n            id=\"job_1\",\n            provider_id=\"provider_a\",\n            text=\"Sun Tzu said the art of war is vital. It determines victory or defeat.\"\n        ),\n        SourceBlock(\n            id=\"job_2\",\n            provider_id=\"provider_b\",\n            text=\"Know your enemy. Know yourself. A hundred battles, a hundred victories.\"\n        )\n    ]\n    \n    # Use await directly (Jupyter supports top-level await)\n    all_segments = await seg_service.split_combined_sources_async(blocks)\n    \n    print(f\"Combined {len(blocks)} blocks into {len(all_segments)} segments:\")\n    for seg in all_segments:\n        print(f\"  [{seg.index}] source={seg.source_id}: '{seg.text[:35]}...'\")\n\n[PluginManager] HTTP Request: POST http://127.0.0.1:33111/execute \"HTTP/1.1 200 OK\"\n[PluginManager] HTTP Request: POST http://127.0.0.1:33111/execute \"HTTP/1.1 200 OK\"\n\n\nCombined 2 blocks into 5 segments:\n  [0] source=job_1: 'Sun Tzu said the art of war is vita...'\n  [1] source=job_1: 'It determines victory or defeat....'\n  [2] source=job_2: 'Know your enemy....'\n  [3] source=job_2: 'Know yourself....'\n  [4] source=job_2: 'A hundred battles, a hundred victor...'\n\n\n\n# Cleanup\nif nltk_meta:\n    manager.unload_all()\n    print(\"Plugins unloaded\")\n\n[PluginManager] HTTP Request: POST http://127.0.0.1:33111/cleanup \"HTTP/1.1 200 OK\"\n[PluginManager] Unloaded plugin: cjm-text-plugin-nltk\n\n\nPlugins unloaded",
+    "crumbs": [
+      "services",
+      "segmentation"
+    ]
+  },
+  {
+    "objectID": "components/keyboard_config.html",
+    "href": "components/keyboard_config.html",
+    "title": "keyboard_config",
+    "section": "",
+    "text": "Constants for hidden inputs and HTMX trigger buttons used by the keyboard navigation system.",
+    "crumbs": [
+      "components",
+      "keyboard_config"
+    ]
+  },
+  {
+    "objectID": "components/keyboard_config.html#hidden-input-and-button-ids",
+    "href": "components/keyboard_config.html#hidden-input-and-button-ids",
+    "title": "keyboard_config",
+    "section": "",
+    "text": "Constants for hidden inputs and HTMX trigger buttons used by the keyboard navigation system.",
+    "crumbs": [
+      "components",
+      "keyboard_config"
+    ]
+  },
+  {
+    "objectID": "components/keyboard_config.html#segmentation-keyboard-parts",
+    "href": "components/keyboard_config.html#segmentation-keyboard-parts",
+    "title": "keyboard_config",
+    "section": "Segmentation Keyboard Parts",
+    "text": "Segmentation Keyboard Parts\nReturns the segmentation-specific building blocks (zone, actions, modes) for assembly into a shared ZoneManager by the combined-level keyboard config.\n\nsource\n\ncreate_seg_kb_parts\n\ndef create_seg_kb_parts(\n    ids:CardStackHtmlIds, # Card stack HTML IDs\n    button_ids:CardStackButtonIds, # Card stack button IDs for navigation\n    config:CardStackConfig, # Card stack configuration\n)-&gt;Tuple: # (zone, actions, modes)\n\nCreate segmentation-specific keyboard building blocks.\nReturns a zone, actions tuple, and modes tuple for assembly into a shared ZoneManager by the combined-level keyboard config.",
+    "crumbs": [
+      "components",
+      "keyboard_config"
+    ]
+  },
+  {
+    "objectID": "components/callbacks.html",
+    "href": "components/callbacks.html",
+    "title": "callbacks",
+    "section": "",
+    "text": "Called by the keyboard navigation library when card focus changes.\n\nsource\n\n\n\ndef generate_seg_callbacks_script(\n    ids:CardStackHtmlIds, # Card stack HTML IDs\n    button_ids:CardStackButtonIds, # Card stack button IDs\n    config:CardStackConfig, # Card stack configuration\n    urls:CardStackUrls, # Card stack URL bundle\n    container_id:str, # ID of the segmentation container (parent of card stack)\n    focus_input_id:str, # ID of hidden input for focused segment index\n)-&gt;any: # Script element with all JavaScript callbacks\n\nGenerate JavaScript for segmentation keyboard interaction.\nDelegates card-stack-generic JS to the library and injects the focus change callback via extra_scripts.",
+    "crumbs": [
+      "components",
+      "callbacks"
+    ]
+  },
+  {
+    "objectID": "components/callbacks.html#focus-change-callback",
+    "href": "components/callbacks.html#focus-change-callback",
+    "title": "callbacks",
+    "section": "",
+    "text": "Called by the keyboard navigation library when card focus changes.\n\nsource\n\n\n\ndef generate_seg_callbacks_script(\n    ids:CardStackHtmlIds, # Card stack HTML IDs\n    button_ids:CardStackButtonIds, # Card stack button IDs\n    config:CardStackConfig, # Card stack configuration\n    urls:CardStackUrls, # Card stack URL bundle\n    container_id:str, # ID of the segmentation container (parent of card stack)\n    focus_input_id:str, # ID of hidden input for focused segment index\n)-&gt;any: # Script element with all JavaScript callbacks\n\nGenerate JavaScript for segmentation keyboard interaction.\nDelegates card-stack-generic JS to the library and injects the focus change callback via extra_scripts.",
+    "crumbs": [
+      "components",
+      "callbacks"
+    ]
+  },
+  {
+    "objectID": "components/callbacks.html#tests",
+    "href": "components/callbacks.html#tests",
+    "title": "callbacks",
+    "section": "Tests",
+    "text": "Tests\n\n# Test focus change script generation\nfocus_script = _generate_focus_change_script(\"test-focus-input\")\nassert \"test-focus-input\" in focus_script\nassert \"onCardFocusChange\" in focus_script\nprint(\"Focus change script test passed\")\n\nFocus change script test passed",
+    "crumbs": [
+      "components",
+      "callbacks"
+    ]
+  },
+  {
+    "objectID": "routes/core.html",
+    "href": "routes/core.html",
+    "title": "core",
+    "section": "",
+    "text": "source\n\n\n\ndef SegContext(\n    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD\n):\n\nCommon segmentation state values loaded by handlers.",
+    "crumbs": [
+      "routes",
+      "core"
+    ]
+  },
+  {
+    "objectID": "routes/core.html#state-management-helpers",
+    "href": "routes/core.html#state-management-helpers",
+    "title": "core",
+    "section": "",
+    "text": "source\n\n\n\ndef SegContext(\n    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD\n):\n\nCommon segmentation state values loaded by handlers.",
+    "crumbs": [
+      "routes",
+      "core"
+    ]
+  },
+  {
+    "objectID": "routes/init.html",
+    "href": "routes/init.html",
+    "title": "init",
+    "section": "",
+    "text": "source\n\n\n\ndef init_segmentation_routers(\n    state_store:SQLiteWorkflowStateStore, # The workflow state store\n    workflow_id:str, # The workflow identifier\n    source_service:SourceService, # Service for fetching source blocks\n    segmentation_service:SegmentationService, # Service for NLTK sentence splitting\n    prefix:str, # Base prefix for segmentation routes (e.g., \"/workflow/seg\")\n    max_history_depth:int=50, # Maximum history stack depth\n    wrapped_handlers:Dict=None, # Dict with 'init', 'split', 'merge', 'undo', 'reset', 'ai_split' keys\n)-&gt;Tuple: # (routers, urls, merged_routes)\n\nInitialize and return all segmentation routers with URL bundle.\nThe wrapped_handlers dict should contain handlers that already have cross-domain concerns (KB system, alignment status) handled by the combined layer’s wrapper factories.",
+    "crumbs": [
+      "routes",
+      "init"
+    ]
+  },
+  {
+    "objectID": "routes/init.html#router-assembly",
+    "href": "routes/init.html#router-assembly",
+    "title": "init",
+    "section": "",
+    "text": "source\n\n\n\ndef init_segmentation_routers(\n    state_store:SQLiteWorkflowStateStore, # The workflow state store\n    workflow_id:str, # The workflow identifier\n    source_service:SourceService, # Service for fetching source blocks\n    segmentation_service:SegmentationService, # Service for NLTK sentence splitting\n    prefix:str, # Base prefix for segmentation routes (e.g., \"/workflow/seg\")\n    max_history_depth:int=50, # Maximum history stack depth\n    wrapped_handlers:Dict=None, # Dict with 'init', 'split', 'merge', 'undo', 'reset', 'ai_split' keys\n)-&gt;Tuple: # (routers, urls, merged_routes)\n\nInitialize and return all segmentation routers with URL bundle.\nThe wrapped_handlers dict should contain handlers that already have cross-domain concerns (KB system, alignment status) handled by the combined layer’s wrapper factories.",
+    "crumbs": [
+      "routes",
+      "init"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "cjm-transcript-segmentation",
+    "section": "",
+    "text": "pip install cjm_transcript_segmentation",
+    "crumbs": [
+      "cjm-transcript-segmentation"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "cjm-transcript-segmentation",
+    "section": "",
+    "text": "pip install cjm_transcript_segmentation",
+    "crumbs": [
+      "cjm-transcript-segmentation"
+    ]
+  },
+  {
+    "objectID": "index.html#project-structure",
+    "href": "index.html#project-structure",
+    "title": "cjm-transcript-segmentation",
+    "section": "Project Structure",
+    "text": "Project Structure\nnbs/\n├── components/ (6)\n│   ├── callbacks.ipynb          # JavaScript callback generators for Phase 2 segmentation keyboard interaction\n│   ├── card_stack_config.ipynb  # Card stack configuration constants for the Phase 2 segmentation UI\n│   ├── helpers.ipynb            # Shared helper functions for the segmentation module\n│   ├── keyboard_config.ipynb    # Segmentation-specific keyboard actions, modes, and zone configuration\n│   ├── segment_card.ipynb       # Segment card component with view and split modes\n│   └── step_renderer.ipynb      # Composable renderers for the Phase 2 segmentation column and shared chrome\n├── routes/ (4)\n│   ├── card_stack.ipynb  # Card stack UI operations — navigation, viewport, mode switching, and response builders\n│   ├── core.ipynb        # Segmentation step state management helpers\n│   ├── handlers.ipynb    # Segmentation workflow handlers — init, split, merge, undo, reset, AI split\n│   └── init.ipynb        # Router assembly for Phase 2 segmentation routes\n├── services/ (1)\n│   └── segmentation.ipynb  # Segmentation service for text decomposition via NLTK plugin\n├── html_ids.ipynb  # HTML ID constants for Phase 2 Left Column: Text Segmentation\n├── models.ipynb    # Data models and URL bundles for Phase 2 Left Column: Text Segmentation\n└── utils.ipynb     # Text processing utilities for segmentation: word counting, position mapping, and statistics\nTotal: 14 notebooks across 3 directories",
+    "crumbs": [
+      "cjm-transcript-segmentation"
+    ]
+  },
+  {
+    "objectID": "index.html#module-dependencies",
+    "href": "index.html#module-dependencies",
+    "title": "cjm-transcript-segmentation",
+    "section": "Module Dependencies",
+    "text": "Module Dependencies\ngraph LR\n    components_callbacks[components.callbacks&lt;br/&gt;callbacks]\n    components_card_stack_config[components.card_stack_config&lt;br/&gt;card_stack_config]\n    components_helpers[components.helpers&lt;br/&gt;helpers]\n    components_keyboard_config[components.keyboard_config&lt;br/&gt;keyboard_config]\n    components_segment_card[components.segment_card&lt;br/&gt;segment_card]\n    components_step_renderer[components.step_renderer&lt;br/&gt;step_renderer]\n    html_ids[html_ids&lt;br/&gt;html_ids]\n    models[models&lt;br/&gt;models]\n    routes_card_stack[routes.card_stack&lt;br/&gt;card_stack]\n    routes_core[routes.core&lt;br/&gt;core]\n    routes_handlers[routes.handlers&lt;br/&gt;handlers]\n    routes_init[routes.init&lt;br/&gt;init]\n    services_segmentation[services.segmentation&lt;br/&gt;segmentation]\n    utils[utils&lt;br/&gt;utils]\n\n    components_helpers --&gt; models\n    components_keyboard_config --&gt; components_card_stack_config\n    components_segment_card --&gt; components_card_stack_config\n    components_segment_card --&gt; html_ids\n    components_segment_card --&gt; models\n    components_step_renderer --&gt; components_card_stack_config\n    components_step_renderer --&gt; html_ids\n    components_step_renderer --&gt; utils\n    components_step_renderer --&gt; components_segment_card\n    components_step_renderer --&gt; models\n    components_step_renderer --&gt; components_callbacks\n    routes_card_stack --&gt; routes_core\n    routes_card_stack --&gt; utils\n    routes_card_stack --&gt; components_segment_card\n    routes_card_stack --&gt; components_card_stack_config\n    routes_card_stack --&gt; models\n    routes_card_stack --&gt; components_step_renderer\n    routes_core --&gt; models\n    routes_handlers --&gt; components_card_stack_config\n    routes_handlers --&gt; services_segmentation\n    routes_handlers --&gt; html_ids\n    routes_handlers --&gt; routes_core\n    routes_handlers --&gt; components_step_renderer\n    routes_handlers --&gt; utils\n    routes_handlers --&gt; routes_card_stack\n    routes_handlers --&gt; models\n    routes_init --&gt; routes_handlers\n    routes_init --&gt; services_segmentation\n    routes_init --&gt; routes_card_stack\n    routes_init --&gt; routes_core\n    routes_init --&gt; models\n    services_segmentation --&gt; models\n    utils --&gt; models\n33 cross-module dependencies detected",
+    "crumbs": [
+      "cjm-transcript-segmentation"
+    ]
+  },
+  {
+    "objectID": "index.html#cli-reference",
+    "href": "index.html#cli-reference",
+    "title": "cjm-transcript-segmentation",
+    "section": "CLI Reference",
+    "text": "CLI Reference\nNo CLI commands found in this project.",
+    "crumbs": [
+      "cjm-transcript-segmentation"
+    ]
+  },
+  {
+    "objectID": "index.html#module-overview",
+    "href": "index.html#module-overview",
+    "title": "cjm-transcript-segmentation",
+    "section": "Module Overview",
+    "text": "Module Overview\nDetailed documentation for each module in the project:\n\ncallbacks (callbacks.ipynb)\n\nJavaScript callback generators for Phase 2 segmentation keyboard interaction\n\n\nImport\nfrom cjm_transcript_segmentation.components.callbacks import (\n    generate_seg_callbacks_script\n)\n\n\nFunctions\ndef _generate_focus_change_script(\n    focus_input_id: str,  # ID of hidden input for focused segment index\n) -&gt; str:  # JavaScript code for focus change callback\n    \"Generate JavaScript for card focus change handling.\"\ndef generate_seg_callbacks_script(\n    ids:CardStackHtmlIds,  # Card stack HTML IDs\n    button_ids:CardStackButtonIds,  # Card stack button IDs\n    config:CardStackConfig,  # Card stack configuration\n    urls:CardStackUrls,  # Card stack URL bundle\n    container_id:str,  # ID of the segmentation container (parent of card stack)\n    focus_input_id:str,  # ID of hidden input for focused segment index\n) -&gt; any:  # Script element with all JavaScript callbacks\n    \"\"\"\n    Generate JavaScript for segmentation keyboard interaction.\n    \n    Delegates card-stack-generic JS to the library and injects the\n    focus change callback via extra_scripts.\n    \"\"\"\n\n\n\ncard_stack (card_stack.ipynb)\n\nCard stack UI operations — navigation, viewport, mode switching, and response builders\n\n\nImport\nfrom cjm_transcript_segmentation.routes.card_stack import (\n    init_card_stack_router\n)\n\n\nFunctions\ndef _make_renderer(\n    urls: SegmentationUrls,  # URL bundle\n    is_split_mode: bool = False,  # Whether split mode is active\n    caret_position: int = 0,  # Caret position for split mode\n    source_boundaries: Set[int] = None,  # Indices where source_id changes\n) -&gt; Any:  # Card renderer callback\n    \"Create a segment card renderer with captured URLs and mode state.\"\ndef _build_slots_oob(\n    segment_dicts: List[Dict[str, Any]],  # Serialized segments\n    state: CardStackState,  # Card stack viewport state\n    urls: SegmentationUrls,  # URL bundle\n    caret_position: int = 0,  # Caret position for split mode\n) -&gt; List[Any]:  # OOB slot elements\n    \"Build OOB slot updates for the viewport sections.\"\ndef _build_nav_response(\n    segment_dicts: List[Dict[str, Any]],  # Serialized segments\n    state: CardStackState,  # Card stack viewport state\n    urls: SegmentationUrls,  # URL bundle\n    caret_position: int = 0,  # Caret position for split mode\n) -&gt; Tuple:  # OOB elements (slots + progress + focus)\n    \"Build OOB response for navigation and mode changes.\"\ndef _handle_seg_navigate(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    sess,  # FastHTML session object\n    direction: str,  # Navigation direction: \"up\", \"down\", \"first\", \"last\", \"page_up\", \"page_down\"\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n):  # OOB slot updates with progress, focus, and source position\n    \"Navigate to a different segment in the viewport using OOB slot swaps.\"\ndef _handle_seg_enter_split_mode(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    segment_index: int,  # Index of segment to enter split mode for\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n):  # OOB slot updates with split mode active for focused segment\n    \"Enter split mode for a specific segment.\"\ndef _handle_seg_exit_split_mode(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n):  # OOB slot updates with split mode deactivated\n    \"Exit split mode.\"\nasync def _handle_seg_update_viewport(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    visible_count: int,  # New number of visible cards\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n):  # Full viewport component (outerHTML swap)\n    \"\"\"\n    Update the viewport with a new card count.\n    \n    Does a full viewport swap because the number of slots changes.\n    Saves the new visible_count and is_auto_mode to state.\n    \"\"\"\ndef _handle_seg_save_width(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    sess,  # FastHTML session object\n    card_width: int,  # Card stack width in rem\n) -&gt; None:  # No response body (swap=none on client)\n    \"\"\"\n    Save the card stack width to server state.\n    \n    Called via debounced HTMX POST from the width slider.\n    Returns nothing since the client uses hx-swap='none'.\n    \"\"\"\ndef init_card_stack_router(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    prefix: str,  # Route prefix (e.g., \"/workflow/seg/card_stack\")\n    urls: SegmentationUrls,  # URL bundle (populated after routes defined)\n) -&gt; Tuple[APIRouter, Dict[str, Callable]]:  # (router, route_dict)\n    \"Initialize card stack routes for segmentation.\"\n\n\n\ncard_stack_config (card_stack_config.ipynb)\n\nCard stack configuration constants for the Phase 2 segmentation UI\n\n\nImport\nfrom cjm_transcript_segmentation.components.card_stack_config import (\n    SEG_CS_CONFIG,\n    SEG_CS_IDS,\n    SEG_CS_BTN_IDS,\n    SEG_TS_CONFIG,\n    SEG_TS_IDS\n)\n\n\nVariables\nSEG_CS_CONFIG\nSEG_CS_IDS\nSEG_CS_BTN_IDS\nSEG_TS_CONFIG\nSEG_TS_IDS\n\n\n\ncore (core.ipynb)\n\nSegmentation step state management helpers\n\n\nImport\nfrom cjm_transcript_segmentation.routes.core import (\n    WorkflowStateStore,\n    DEBUG_SEG_STATE,\n    DEFAULT_MAX_HISTORY_DEPTH,\n    SegContext\n)\n\n\nFunctions\ndef _to_segments(\n    segment_dicts: List[Dict[str, Any]]  # Serialized segment dictionaries\n) -&gt; List[TextSegment]:  # Deserialized TextSegment objects\n    \"Convert segment dictionaries to TextSegment objects.\"\ndef _get_seg_state(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    session_id: str  # Session identifier string\n) -&gt; SegmentationStepState:  # Segmentation step state dictionary\n    \"Get the segmentation step state from the workflow state store.\"\ndef _get_selection_state(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    session_id: str  # Session identifier string\n) -&gt; Dict[str, Any]:  # Selection step state dictionary\n    \"Get the selection step state (Phase 1) from the workflow state store.\"\ndef _build_card_stack_state(\n    ctx: SegContext,  # Loaded segmentation context\n    active_mode: str = None,  # Active interaction mode (e.g. \"split\")\n) -&gt; CardStackState:  # Card stack state for library functions\n    \"Build a CardStackState from segmentation context for library calls.\"\ndef _load_seg_context(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    session_id: str  # Session identifier string\n) -&gt; SegContext:  # Common segmentation state values\n    \"Load commonly-needed segmentation state values in a single call.\"\ndef _update_seg_state(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    session_id: str,  # Session identifier string\n    segments: List[Dict[str, Any]] = None,  # Updated segments (None = don't change)\n    initial_segments: List[Dict[str, Any]] = None,  # Initial segments for reset (None = don't change)\n    focused_index: int = None,  # Updated focused index (None = don't change)\n    is_initialized: bool = None,  # Initialization flag (None = don't change)\n    history: List[Dict[str, Any]] = None,  # Updated history (None = don't change)\n    visible_count: int = None,  # Visible card count (None = don't change)\n    is_auto_mode: bool = None,  # Auto-adjust mode flag (None = don't change)\n    card_width: int = None,  # Card stack width in rem (None = don't change)\n) -&gt; None\n    \"Update the segmentation step state in the workflow state store.\"\ndef _push_history(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    session_id: str,  # Session identifier string\n    current_segments: List[Dict[str, Any]],  # Current segments to snapshot\n    focused_index: int,  # Current focused index to snapshot\n    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n) -&gt; int:  # New history depth after push\n    \"Push current state to history stack before making changes.\"\n\n\nClasses\nclass SegContext(NamedTuple):\n    \"Common segmentation state values loaded by handlers.\"\n\n\nVariables\nDEBUG_SEG_STATE = False\nDEFAULT_MAX_HISTORY_DEPTH = 50\n\n\n\nhandlers (handlers.ipynb)\n\nSegmentation workflow handlers — init, split, merge, undo, reset, AI split\n\n\nImport\nfrom cjm_transcript_segmentation.routes.handlers import (\n    DEBUG_SEG_HANDLERS,\n    SegInitResult,\n    init_workflow_router\n)\n\n\nFunctions\ndef _build_mutation_response(\n    segment_dicts:List[Dict[str, Any]],  # Serialized segments\n    focused_index:int,  # Currently focused segment index\n    visible_count:int,  # Number of visible cards\n    history_depth:int,  # Current undo history depth\n    urls:SegmentationUrls,  # URL bundle\n    is_split_mode:bool=False,  # Whether split mode is active\n    is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode\n) -&gt; Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)\n    \"\"\"\n    Build the standard OOB response for mutation handlers.\n    \n    Returns domain-specific OOB elements. The combined layer wrapper\n    adds cross-domain elements (mini-stats badge, alignment status).\n    \"\"\"\nasync def _handle_seg_init(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    source_service: SourceService,  # Service for fetching source blocks\n    segmentation_service: SegmentationService,  # Service for NLTK sentence splitting\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n    visible_count: int = DEFAULT_VISIBLE_COUNT,  # Number of visible cards\n    card_width: int = DEFAULT_CARD_WIDTH,  # Card stack width in rem\n) -&gt; SegInitResult:  # Pure domain result for wrapper to use\n    \"\"\"\n    Initialize segments from Phase 1 selected sources.\n    \n    Returns pure domain data. The combined layer wrapper adds cross-domain\n    coordination (KB system, shared chrome, alignment status).\n    \"\"\"\nasync def _handle_seg_split(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    segment_index: int,  # Index of segment to split\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n):  # OOB slot updates with stats, progress, focus, and toolbar\n    \"Split a segment at the specified word position.\"\ndef _build_merge_reject_flash(\n    prev_index:int,  # Index of the segment above the boundary\n    curr_index:int,  # Index of the segment below the boundary\n) -&gt; Div:  # OOB div containing JS that flashes both boundary cards\n    \"Build an OOB element that flashes both cards at a source boundary.\"\ndef _handle_seg_merge(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    segment_index: int,  # Index of segment to merge (merges with previous)\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n):  # OOB slot updates with stats, progress, focus, and toolbar\n    \"Merge a segment with the previous segment.\"\ndef _handle_seg_undo(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n):  # OOB slot updates with stats, progress, focus, and toolbar\n    \"Undo the last operation by restoring previous state from history.\"\ndef _handle_seg_reset(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n):  # OOB slot updates with stats, progress, focus, and toolbar\n    \"Reset segments to the initial NLTK split result.\"\nasync def _handle_seg_ai_split(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    segmentation_service: SegmentationService,  # Service for NLTK sentence splitting\n    request,  # FastHTML request object\n    sess,  # FastHTML session object\n    urls: SegmentationUrls,  # URL bundle for segmentation routes\n    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n):  # OOB slot updates with stats, progress, focus, and toolbar\n    \"Re-run AI (NLTK) sentence splitting on all current text.\"\ndef init_workflow_router(\n    state_store: WorkflowStateStore,  # The workflow state store\n    workflow_id: str,  # The workflow identifier\n    source_service: SourceService,  # Service for fetching source blocks\n    segmentation_service: SegmentationService,  # Service for NLTK sentence splitting\n    prefix: str,  # Route prefix (e.g., \"/workflow/seg/workflow\")\n    urls: SegmentationUrls,  # URL bundle (populated after routes defined)\n    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n    handler_init: Callable = None,  # Optional wrapped init handler\n    handler_split: Callable = None,  # Optional wrapped split handler\n    handler_merge: Callable = None,  # Optional wrapped merge handler\n    handler_undo: Callable = None,  # Optional wrapped undo handler\n    handler_reset: Callable = None,  # Optional wrapped reset handler\n    handler_ai_split: Callable = None,  # Optional wrapped ai_split handler\n) -&gt; Tuple[APIRouter, Dict[str, Callable]]:  # (router, route_dict)\n    \"\"\"\n    Initialize workflow routes for segmentation.\n    \n    Accepts optional handler overrides for wrapping with cross-domain\n    coordination (e.g., KB system, shared chrome, alignment status).\n    \"\"\"\n\n\nClasses\nclass SegInitResult(NamedTuple):\n    \"\"\"\n    Result from pure segmentation init handler.\n    \n    Contains domain-specific data for the combined layer wrapper to use\n    when building cross-domain OOB elements (KB system, shared chrome).\n    \"\"\"\n\n\nVariables\nDEBUG_SEG_HANDLERS = True\n\n\n\nhelpers (helpers.ipynb)\n\nShared helper functions for the segmentation module\n\n\nImport\nfrom cjm_transcript_segmentation.components.helpers import *\n\n\nFunctions\ndef _get_segmentation_state(\n    ctx: InteractionContext  # Interaction context with state\n) -&gt; SegmentationStepState:  # Typed segmentation step state\n    \"Get the full segmentation step state from context.\"\ndef _get_segments(\n    ctx: InteractionContext  # Interaction context with state\n) -&gt; List[TextSegment]:  # List of TextSegment objects\n    \"Get the list of segments from step state as TextSegment objects.\"\ndef _is_initialized(\n    ctx: InteractionContext  # Interaction context with state\n) -&gt; bool:  # True if segments have been initialized\n    \"Check if segments have been initialized.\"\ndef _get_visible_count(\n    ctx: InteractionContext,  # Interaction context with state\n    default: int = 3,  # Default visible card count\n) -&gt; int:  # Number of visible cards in viewport\n    \"Get the stored visible card count.\"\ndef _get_card_width(\n    ctx: InteractionContext,  # Interaction context with state\n    default: int = 80,  # Default card width in rem\n) -&gt; int:  # Card stack width in rem\n    \"Get the stored card stack width.\"\ndef _get_is_auto_mode(\n    ctx: InteractionContext,  # Interaction context with state\n) -&gt; bool:  # Whether card count is in auto-adjust mode\n    \"Get whether the card count is in auto-adjust mode.\"\ndef _get_history(\n    ctx: InteractionContext  # Interaction context with state\n) -&gt; List[List[Dict[str, Any]]]:  # Stack of segment snapshots\n    \"Get the undo history stack.\"\ndef _get_focused_index(\n    ctx: InteractionContext  # Interaction context with state\n) -&gt; int:  # Currently focused segment index\n    \"Get the currently focused segment index.\"\n\n\n\nhtml_ids (html_ids.ipynb)\n\nHTML ID constants for Phase 2 Left Column: Text Segmentation\n\n\nImport\nfrom cjm_transcript_segmentation.html_ids import (\n    SegmentationHtmlIds\n)\n\n\nClasses\nclass SegmentationHtmlIds:\n    \"HTML ID constants for Phase 2 Left Column: Text Segmentation.\"\n    \n    def as_selector(\n            id_str:str  # The HTML ID to convert\n        ) -&gt; str:  # CSS selector with # prefix\n        \"Convert an ID to a CSS selector format.\"\n    \n    def segment_card(\n            index:int  # Segment index in the decomposition\n        ) -&gt; str:  # HTML ID for the segment card\n        \"Generate HTML ID for a segment card.\"\n\n\n\ninit (init.ipynb)\n\nRouter assembly for Phase 2 segmentation routes\n\n\nImport\nfrom cjm_transcript_segmentation.routes.init import (\n    WrappedHandlers,\n    init_segmentation_routers\n)\n\n\nFunctions\ndef init_segmentation_routers(\n    state_store:WorkflowStateStore,  # The workflow state store\n    workflow_id:str,  # The workflow identifier\n    source_service:SourceService,  # Service for fetching source blocks\n    segmentation_service:SegmentationService,  # Service for NLTK sentence splitting\n    prefix:str,  # Base prefix for segmentation routes (e.g., \"/workflow/seg\")\n    max_history_depth:int=DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth\n    wrapped_handlers:WrappedHandlers=None,  # Dict with 'init', 'split', 'merge', 'undo', 'reset', 'ai_split' keys\n) -&gt; Tuple[List[APIRouter], SegmentationUrls, Dict[str, Callable]]:  # (routers, urls, merged_routes)\n    \"\"\"\n    Initialize and return all segmentation routers with URL bundle.\n    \n    The wrapped_handlers dict should contain handlers that already have\n    cross-domain concerns (KB system, alignment status) handled by the\n    combined layer's wrapper factories.\n    \"\"\"\n\n\n\nkeyboard_config (keyboard_config.ipynb)\n\nSegmentation-specific keyboard actions, modes, and zone configuration\n\n\nImport\nfrom cjm_transcript_segmentation.components.keyboard_config import (\n    SD_SEG_ENTER_SPLIT_BTN,\n    SD_SEG_EXIT_SPLIT_BTN,\n    SD_SEG_SPLIT_BTN,\n    SD_SEG_MERGE_BTN,\n    SD_SEG_UNDO_BTN,\n    create_seg_kb_parts\n)\n\n\nFunctions\ndef create_seg_kb_parts(\n    ids:CardStackHtmlIds,  # Card stack HTML IDs\n    button_ids:CardStackButtonIds,  # Card stack button IDs for navigation\n    config:CardStackConfig,  # Card stack configuration\n) -&gt; Tuple[FocusZone, tuple, tuple]:  # (zone, actions, modes)\n    \"\"\"\n    Create segmentation-specific keyboard building blocks.\n    \n    Returns a zone, actions tuple, and modes tuple for assembly into a shared\n    ZoneManager by the combined-level keyboard config.\n    \"\"\"\n\n\nVariables\nSD_SEG_ENTER_SPLIT_BTN = 'sd-seg-enter-split-btn'\nSD_SEG_EXIT_SPLIT_BTN = 'sd-seg-exit-split-btn'\nSD_SEG_SPLIT_BTN = 'sd-seg-split-btn'\nSD_SEG_MERGE_BTN = 'sd-seg-merge-btn'\nSD_SEG_UNDO_BTN = 'sd-seg-undo-btn'\n\n\n\nmodels (models.ipynb)\n\nData models and URL bundles for Phase 2 Left Column: Text Segmentation\n\n\nImport\nfrom cjm_transcript_segmentation.models import (\n    TextSegment,\n    SegmentationStepState,\n    SegmentationUrls\n)\n\n\nClasses\n@dataclass\nclass TextSegment:\n    \"A text segment during workflow processing before graph commit.\"\n    \n    index: int  # Sequence position (0-indexed)\n    text: str  # Segment text content\n    source_id: Optional[str]  # ID of source block\n    source_provider_id: Optional[str]  # Source provider identifier\n    start_char: Optional[int]  # Start character index in source\n    end_char: Optional[int]  # End character index in source\n    \n    def to_dict(self) -&gt; Dict[str, Any]:  # Dictionary representation\n            \"\"\"Convert to dictionary for JSON serialization.\"\"\"\n            return asdict(self)\n        \n        @classmethod\n        def from_dict(\n            cls,\n            data: Dict[str, Any]  # Dictionary representation\n        ) -&gt; \"TextSegment\":  # Reconstructed TextSegment\n        \"Convert to dictionary for JSON serialization.\"\n    \n    def from_dict(\n            cls,\n            data: Dict[str, Any]  # Dictionary representation\n        ) -&gt; \"TextSegment\":  # Reconstructed TextSegment\n        \"Create from dictionary, filtering out legacy/unknown fields.\"\nclass SegmentationStepState(TypedDict):\n    \"State for Phase 2 (left column): Text Segmentation.\"\n@dataclass\nclass SegmentationUrls:\n    \"URL bundle for Phase 2 segmentation route handlers and renderers.\"\n    \n    card_stack: CardStackUrls = field(...)\n    split: str = ''  # Execute split at word position\n    merge: str = ''  # Merge segment with previous\n    enter_split: str = ''  # Enter split mode for focused segment\n    exit_split: str = ''  # Exit split mode\n    reset: str = ''  # Reset to initial segments\n    ai_split: str = ''  # AI (NLTK) re-split\n    undo: str = ''  # Undo last operation\n    init: str = ''  # Initialize segments from Phase 1\n\n\n\nsegment_card (segment_card.ipynb)\n\nSegment card component with view and split modes\n\n\nImport\nfrom cjm_transcript_segmentation.components.segment_card import (\n    render_segment_card,\n    create_segment_card_renderer\n)\n\n\nFunctions\ndef _render_card_metadata(\n    segment:TextSegment,  # Segment to render metadata for\n) -&gt; Any:  # Metadata component\n    \"Render the left metadata column of a segment card.\"\ndef _render_view_mode_content(\n    segment: TextSegment,  # Segment to render\n    card_role: CardRole,  # Role of this card in viewport\n    enter_split_url: str,  # URL to enter split mode\n) -&gt; Any:  # View mode content component\n    \"Render the text content in view mode.\"\ndef _render_split_mode_content(\n    segment:TextSegment,  # Segment to render\n    caret_position:int,  # Current caret position (token index)\n    split_url:str,  # URL to execute split\n    exit_split_url:str,  # URL to exit split mode\n) -&gt; Any:  # Split mode content component\n    \"Render the interactive token display in split mode.\"\ndef _render_card_actions(\n    \"Render hover-visible action buttons.\"\ndef render_segment_card(\n    \"Render a segment card with view or split mode content.\"\ndef create_segment_card_renderer(\n    split_url: str = \"\",  # URL to execute split\n    merge_url: str = \"\",  # URL to merge with previous\n    enter_split_url: str = \"\",  # URL to enter split mode\n    exit_split_url: str = \"\",  # URL to exit split mode\n    is_split_mode: bool = False,  # Whether split mode is active\n    caret_position: int = 0,  # Caret position for split mode (word index)\n    source_boundaries: Set[int] = None,  # Indices where source_id changes\n) -&gt; Callable:  # Card renderer callback: (item, CardRenderContext) -&gt; FT\n    \"Create a card renderer callback for segment cards.\"\n\n\n\nsegmentation (segmentation.ipynb)\n\nSegmentation service for text decomposition via NLTK plugin\n\n\nImport\nfrom cjm_transcript_segmentation.services.segmentation import (\n    SegmentationService,\n    split_segment_at_position,\n    merge_text_segments,\n    reindex_segments,\n    reconstruct_source_blocks\n)\n\n\nFunctions\ndef split_segment_at_position(\n    segment: TextSegment,  # Segment to split\n    char_position: int  # Character position to split at (relative to segment text)\n) -&gt; tuple[TextSegment, TextSegment]:  # Two new segments\n    \"Split a segment into two at the given character position.\"\ndef merge_text_segments(\n    first: TextSegment,  # First segment (earlier in sequence)\n    second: TextSegment,  # Second segment (later in sequence)\n    separator: str = \" \"  # Text separator between segments\n) -&gt; TextSegment:  # Merged segment\n    \"Merge two adjacent segments into one.\"\ndef reindex_segments(\n    segments: List[TextSegment]  # List of segments to reindex\n) -&gt; List[TextSegment]:  # Segments with corrected indices\n    \"Reindex segments to have sequential indices starting from 0.\"\ndef reconstruct_source_blocks(\n    segment_dicts: List[Dict[str, Any]],  # Serialized working segments\n) -&gt; List[SourceBlock]:  # Reconstructed source blocks with combined text\n    \"Reconstruct source blocks by grouping segments by source_id and combining text.\"\n\n\nClasses\nclass SegmentationService:\n    def __init__(\n        self,\n        plugin_manager: PluginManager,  # Plugin manager for accessing text plugin\n        plugin_name: str = \"cjm-text-plugin-nltk\"  # Name of the text processing plugin\n    )\n    \"Service for text segmentation via NLTK plugin.\"\n    \n    def __init__(\n            self,\n            plugin_manager: PluginManager,  # Plugin manager for accessing text plugin\n            plugin_name: str = \"cjm-text-plugin-nltk\"  # Name of the text processing plugin\n        )\n        \"Initialize the segmentation service.\"\n    \n    def is_available(self) -&gt; bool:  # True if plugin is loaded and ready\n            \"\"\"Check if the text processing plugin is available.\"\"\"\n            return self._manager.get_plugin(self._plugin_name) is not None\n        \n        def ensure_loaded(\n            self,\n            config: Optional[Dict[str, Any]] = None  # Optional plugin configuration\n        ) -&gt; bool:  # True if successfully loaded\n        \"Check if the text processing plugin is available.\"\n    \n    def ensure_loaded(\n            self,\n            config: Optional[Dict[str, Any]] = None  # Optional plugin configuration\n        ) -&gt; bool:  # True if successfully loaded\n        \"Ensure the text processing plugin is loaded.\"\n    \n    async def split_sentences_async(\n            self,\n            text: str,  # Text to split into sentences\n            source_id: Optional[str] = None,  # Source block ID for traceability\n            source_provider_id: Optional[str] = None  # Source provider identifier for traceability\n        ) -&gt; List[TextSegment]:  # List of TextSegment objects\n        \"Split text into sentences asynchronously.\"\n    \n    def split_sentences(\n            self,\n            text: str,  # Text to split into sentences\n            source_id: Optional[str] = None,  # Source block ID for traceability\n            source_provider_id: Optional[str] = None  # Source provider identifier for traceability\n        ) -&gt; List[TextSegment]:  # List of TextSegment objects\n        \"Split text into sentences synchronously.\"\n    \n    async def split_combined_sources_async(\n            self,\n            source_blocks: List[SourceBlock]  # Ordered list of source blocks\n        ) -&gt; List[TextSegment]:  # Combined list of TextSegments with proper traceability\n        \"Split multiple source blocks into segments with proper source tracking.\"\n\n\n\nstep_renderer (step_renderer.ipynb)\n\nComposable renderers for the Phase 2 segmentation column and shared chrome\n\n\nImport\nfrom cjm_transcript_segmentation.components.step_renderer import (\n    render_toolbar,\n    render_seg_stats,\n    render_seg_source_position,\n    render_seg_column_body,\n    render_seg_footer_content,\n    render_seg_mini_stats_text\n)\n\n\nFunctions\ndef render_toolbar(\n    reset_url: str,  # URL for reset action\n    ai_split_url: str,  # URL for AI split action\n    undo_url: str,  # URL for undo action\n    can_undo: bool,  # Whether undo is available\n    visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count\n    is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode\n    oob: bool = False,  # Whether to render as OOB swap\n) -&gt; Any:  # Toolbar component\n    \"Render the segmentation toolbar with action buttons and card count selector.\"\ndef render_seg_stats(\n    segments: List[TextSegment],  # Current segments\n    oob: bool = False,  # Whether to render as OOB swap\n) -&gt; Any:  # Statistics component\n    \"Render segmentation statistics.\"\ndef render_seg_source_position(\n    segments: List[TextSegment],  # Current segments\n    focused_index: int = 0,  # Currently focused segment index\n    oob: bool = False,  # Whether to render as OOB swap\n) -&gt; Any:  # Source position indicator (empty if single source)\n    \"Render source position indicator for the focused segment.\"\ndef render_seg_column_body(\n    segments:List[TextSegment],  # Segments to display\n    focused_index:int,  # Currently focused segment index\n    visible_count:int,  # Number of visible cards in viewport\n    card_width:int,  # Card stack width in rem\n    urls:SegmentationUrls,  # URL bundle for all segmentation routes\n    kb_system:Optional[Any]=None,  # Rendered keyboard system (None when KB managed externally)\n) -&gt; Any:  # Div with id=COLUMN_CONTENT containing viewport + infrastructure\n    \"Render the segmentation column content area with card stack viewport.\"\ndef render_seg_footer_content(\n    segments:List[TextSegment],  # Current segments\n    focused_index:int,  # Currently focused segment index\n) -&gt; Any:  # Footer content with progress indicator, source position, and stats\n    \"Render footer content with progress indicator, source position, and segment statistics.\"\ndef render_seg_mini_stats_text(\n    segments:List[TextSegment],  # Current segments\n) -&gt; str:  # Compact stats string for column header badge\n    \"Generate compact stats string for the segmentation column header badge.\"\n\n\n\nutils (utils.ipynb)\n\nText processing utilities for segmentation: word counting, position mapping, and statistics\n\n\nImport\nfrom cjm_transcript_segmentation.utils import (\n    count_words,\n    word_index_to_char_position,\n    calculate_segment_stats,\n    get_source_boundaries,\n    get_source_count,\n    get_source_position\n)\n\n\nFunctions\ndef count_words(\n    text: str  # Text to count words in\n) -&gt; int:  # Word count\n    \"Count the number of whitespace-delimited words in text.\"\ndef word_index_to_char_position(\n    text: str,  # Full text\n    word_index: int  # Word index (0-based, split happens before this word)\n) -&gt; int:  # Character position for split\n    \"Convert a word index to the character position where a split should occur.\"\ndef calculate_segment_stats(\n    segments: List[\"TextSegment\"]  # List of segments to analyze\n) -&gt; Dict[str, Any]:  # Statistics dictionary with total_words, total_segments\n    \"Calculate aggregate statistics for a list of segments.\"\ndef get_source_boundaries(\n    segments: List[\"TextSegment\"],  # Ordered list of segments\n) -&gt; Set[int]:  # Indices where source_id changes from the previous segment\n    \"\"\"\n    Find indices where source_id changes between adjacent segments.\n    \n    A boundary at index N means segment[N].source_id differs from\n    segment[N-1].source_id. Both must be non-None for a boundary to exist.\n    \"\"\"\ndef get_source_count(\n    segments: List[\"TextSegment\"],  # Ordered list of segments\n) -&gt; int:  # Number of unique non-None source_ids\n    \"Count the number of unique audio sources in the segment list.\"\ndef get_source_position(\n    segments: List[\"TextSegment\"],  # Ordered list of segments\n    focused_index: int,  # Index of the focused segment\n) -&gt; Optional[int]:  # 1-based position in ordered unique sources, or None\n    \"\"\"\n    Get the source position (1-based) of the focused segment.\n    \n    Returns which source group the focused segment belongs to,\n    based on order of first appearance.\n    \"\"\"",
+    "crumbs": [
+      "cjm-transcript-segmentation"
+    ]
+  }
+]
