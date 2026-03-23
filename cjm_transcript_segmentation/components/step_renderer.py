@@ -65,14 +65,38 @@ from cjm_transcript_segmentation.components.callbacks import (
 # %% ../../nbs/components/step_renderer.ipynb #jcuddefpbb
 def render_toolbar(
     reset_url: str,  # URL for reset action
-    ai_split_url: str,  # URL for AI split action
+    ai_split_url: str,  # URL for NLTK split action
     undo_url: str,  # URL for undo action
     can_undo: bool,  # Whether undo is available
     visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count
     is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode
+    extra_actions: Any = None,  # Additional content for the right action group
     oob: bool = False,  # Whether to render as OOB swap
 ) -> Any:  # Toolbar component
     """Render the segmentation toolbar with action buttons and card count selector."""
+    # Right group: Reset, NLTK Split, and any extra actions
+    right_children = [
+        Button(
+            lucide_icon("rotate-ccw", size=4, cls=str(m.r(2))),
+            "Reset",
+            id=SegmentationHtmlIds.SEG_RESET_BTN,
+            cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
+            hx_post=reset_url,
+            hx_swap="none"
+        ),
+        Button(
+            lucide_icon("sparkles", size=4, cls=str(m.r(2))),
+            "NLTK Split",
+            id=SegmentationHtmlIds.SEG_AI_SPLIT_BTN,
+            cls=combine_classes(btn, btn_colors.secondary, btn_sizes.sm),
+            hx_post=ai_split_url,
+            hx_swap="none"
+        ),
+    ]
+
+    if extra_actions is not None:
+        right_children.append(extra_actions)
+
     return Div(
         # Left group: Undo button
         # Note: no id= here — the keyboard system owns the "sd-seg-undo-btn" ID
@@ -106,25 +130,10 @@ def render_toolbar(
         # Right spacer
         Div(cls=str(grow())),
 
-        # Right group: Reset and AI Split buttons
+        # Right group: action buttons + extra actions
         Div(
-            Button(
-                lucide_icon("rotate-ccw", size=4, cls=str(m.r(2))),
-                "Reset",
-                id=SegmentationHtmlIds.SEG_RESET_BTN,
-                cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
-                hx_post=reset_url,
-                hx_swap="none"
-            ),
-            Button(
-                lucide_icon("sparkles", size=4, cls=str(m.r(2))),
-                "AI Split",
-                id=SegmentationHtmlIds.SEG_AI_SPLIT_BTN,
-                cls=combine_classes(btn, btn_colors.secondary, btn_sizes.sm),
-                hx_post=ai_split_url,
-                hx_swap="none"
-            ),
-            cls=combine_classes(flex_display, gap(2))
+            *right_children,
+            cls=combine_classes(flex_display, gap(2), items.center)
         ),
 
         id=SegmentationHtmlIds.SEG_TOOLBAR,

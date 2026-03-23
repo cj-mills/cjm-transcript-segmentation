@@ -53,35 +53,35 @@ graph LR
 
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
-    components_segment_card --> components_card_stack_config
-    components_segment_card --> html_ids
     components_segment_card --> models
-    components_step_renderer --> components_card_stack_config
-    components_step_renderer --> html_ids
-    components_step_renderer --> utils
-    components_step_renderer --> components_segment_card
+    components_segment_card --> html_ids
+    components_segment_card --> components_card_stack_config
     components_step_renderer --> models
+    components_step_renderer --> utils
     components_step_renderer --> components_callbacks
-    routes_card_stack --> routes_core
+    components_step_renderer --> html_ids
+    components_step_renderer --> components_card_stack_config
+    components_step_renderer --> components_segment_card
     routes_card_stack --> utils
-    routes_card_stack --> components_segment_card
+    routes_card_stack --> routes_core
     routes_card_stack --> components_card_stack_config
     routes_card_stack --> models
     routes_card_stack --> components_step_renderer
+    routes_card_stack --> components_segment_card
     routes_core --> models
-    routes_handlers --> components_card_stack_config
-    routes_handlers --> services_segmentation
-    routes_handlers --> html_ids
-    routes_handlers --> routes_core
-    routes_handlers --> components_step_renderer
-    routes_handlers --> utils
-    routes_handlers --> routes_card_stack
     routes_handlers --> models
-    routes_init --> routes_handlers
-    routes_init --> services_segmentation
-    routes_init --> routes_card_stack
+    routes_handlers --> routes_core
+    routes_handlers --> utils
+    routes_handlers --> html_ids
+    routes_handlers --> services_segmentation
+    routes_handlers --> components_step_renderer
+    routes_handlers --> routes_card_stack
+    routes_handlers --> components_card_stack_config
     routes_init --> routes_core
+    routes_init --> routes_handlers
     routes_init --> models
+    routes_init --> routes_card_stack
+    routes_init --> services_segmentation
     services_segmentation --> models
     utils --> models
 ```
@@ -394,6 +394,7 @@ DEFAULT_MAX_HISTORY_DEPTH = 50
 ``` python
 from cjm_transcript_segmentation.routes.handlers import (
     DEBUG_SEG_HANDLERS,
+    build_mutation_response,
     SegInitResult,
     init_workflow_router
 )
@@ -402,7 +403,7 @@ from cjm_transcript_segmentation.routes.handlers import (
 #### Functions
 
 ``` python
-def _build_mutation_response(
+def build_mutation_response(
     segment_dicts:List[Dict[str, Any]],  # Serialized segments
     focused_index:int,  # Currently focused segment index
     visible_count:int,  # Number of visible cards
@@ -410,6 +411,7 @@ def _build_mutation_response(
     urls:SegmentationUrls,  # URL bundle
     is_split_mode:bool=False,  # Whether split mode is active
     is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
+    extra_actions:Any=None,  # Additional toolbar content (e.g., FA controls)
 ) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
     """
     Build the standard OOB response for mutation handlers.
@@ -506,7 +508,7 @@ async def _handle_seg_ai_split(
     urls: SegmentationUrls,  # URL bundle for segmentation routes
     max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
 ):  # OOB slot updates with stats, progress, focus, and toolbar
-    "Re-run AI (NLTK) sentence splitting on all current text."
+    "Re-run NLTK sentence splitting on all current text."
 ```
 
 ``` python
@@ -987,11 +989,12 @@ from cjm_transcript_segmentation.components.step_renderer import (
 ``` python
 def render_toolbar(
     reset_url: str,  # URL for reset action
-    ai_split_url: str,  # URL for AI split action
+    ai_split_url: str,  # URL for NLTK split action
     undo_url: str,  # URL for undo action
     can_undo: bool,  # Whether undo is available
     visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count
     is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode
+    extra_actions: Any = None,  # Additional content for the right action group
     oob: bool = False,  # Whether to render as OOB swap
 ) -> Any:  # Toolbar component
     "Render the segmentation toolbar with action buttons and card count selector."
