@@ -53,35 +53,35 @@ graph LR
 
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
-    components_segment_card --> models
     components_segment_card --> html_ids
     components_segment_card --> components_card_stack_config
-    components_step_renderer --> models
-    components_step_renderer --> utils
-    components_step_renderer --> components_callbacks
-    components_step_renderer --> html_ids
+    components_segment_card --> models
     components_step_renderer --> components_card_stack_config
+    components_step_renderer --> html_ids
+    components_step_renderer --> utils
+    components_step_renderer --> models
+    components_step_renderer --> components_callbacks
     components_step_renderer --> components_segment_card
-    routes_card_stack --> utils
-    routes_card_stack --> routes_core
     routes_card_stack --> components_card_stack_config
+    routes_card_stack --> routes_core
     routes_card_stack --> models
     routes_card_stack --> components_step_renderer
+    routes_card_stack --> utils
     routes_card_stack --> components_segment_card
     routes_core --> models
-    routes_handlers --> models
-    routes_handlers --> routes_core
-    routes_handlers --> utils
-    routes_handlers --> html_ids
     routes_handlers --> services_segmentation
-    routes_handlers --> components_step_renderer
-    routes_handlers --> routes_card_stack
     routes_handlers --> components_card_stack_config
-    routes_init --> routes_core
+    routes_handlers --> html_ids
+    routes_handlers --> routes_core
+    routes_handlers --> routes_card_stack
+    routes_handlers --> utils
+    routes_handlers --> models
+    routes_handlers --> components_step_renderer
+    routes_init --> services_segmentation
     routes_init --> routes_handlers
+    routes_init --> routes_core
     routes_init --> models
     routes_init --> routes_card_stack
-    routes_init --> services_segmentation
     services_segmentation --> models
     utils --> models
 ```
@@ -396,6 +396,7 @@ from cjm_transcript_segmentation.routes.handlers import (
     DEBUG_SEG_HANDLERS,
     build_mutation_response,
     SegInitResult,
+    SegMutationResult,
     init_workflow_router
 )
 ```
@@ -442,7 +443,7 @@ async def _handle_seg_init(
 ```
 
 ``` python
-async def _handle_seg_split(
+async def _handle_seg_split_result(
     state_store: WorkflowStateStore,  # The workflow state store
     workflow_id: str,  # The workflow identifier
     request,  # FastHTML request object
@@ -450,6 +451,18 @@ async def _handle_seg_split(
     segment_index: int,  # Index of segment to split
     urls: SegmentationUrls,  # URL bundle for segmentation routes
     max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
+) -> SegMutationResult:  # Mutation result data
+    "Split a segment at the specified word position. Returns data, not OOB."
+```
+
+``` python
+async def _handle_seg_split(
+    state_store: WorkflowStateStore,
+    workflow_id: str,
+    request, sess,
+    segment_index: int,
+    urls: SegmentationUrls,
+    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,
 ):  # OOB slot updates with stats, progress, focus, and toolbar
     "Split a segment at the specified word position."
 ```
@@ -463,7 +476,7 @@ def _build_merge_reject_flash(
 ```
 
 ``` python
-def _handle_seg_merge(
+def _handle_seg_merge_result(
     state_store: WorkflowStateStore,  # The workflow state store
     workflow_id: str,  # The workflow identifier
     request,  # FastHTML request object
@@ -471,35 +484,68 @@ def _handle_seg_merge(
     segment_index: int,  # Index of segment to merge (merges with previous)
     urls: SegmentationUrls,  # URL bundle for segmentation routes
     max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
+) -> SegMutationResult:  # Mutation result data (extra_oob may contain merge rejection flash)
+    "Merge a segment with the previous segment. Returns data, not OOB."
+```
+
+``` python
+def _handle_seg_merge(
+    state_store: WorkflowStateStore,
+    workflow_id: str,
+    request, sess,
+    segment_index: int,
+    urls: SegmentationUrls,
+    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,
 ):  # OOB slot updates with stats, progress, focus, and toolbar
     "Merge a segment with the previous segment."
 ```
 
 ``` python
-def _handle_seg_undo(
+def _handle_seg_undo_result(
     state_store: WorkflowStateStore,  # The workflow state store
     workflow_id: str,  # The workflow identifier
     request,  # FastHTML request object
     sess,  # FastHTML session object
     urls: SegmentationUrls,  # URL bundle for segmentation routes
+) -> SegMutationResult:  # Mutation result data
+    "Undo the last operation by restoring previous state from history. Returns data, not OOB."
+```
+
+``` python
+def _handle_seg_undo(
+    state_store: WorkflowStateStore,
+    workflow_id: str,
+    request, sess,
+    urls: SegmentationUrls,
 ):  # OOB slot updates with stats, progress, focus, and toolbar
     "Undo the last operation by restoring previous state from history."
 ```
 
 ``` python
-def _handle_seg_reset(
+def _handle_seg_reset_result(
     state_store: WorkflowStateStore,  # The workflow state store
     workflow_id: str,  # The workflow identifier
     request,  # FastHTML request object
     sess,  # FastHTML session object
     urls: SegmentationUrls,  # URL bundle for segmentation routes
     max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
+) -> SegMutationResult:  # Mutation result data
+    "Reset segments to the initial split result. Returns data, not OOB."
+```
+
+``` python
+def _handle_seg_reset(
+    state_store: WorkflowStateStore,
+    workflow_id: str,
+    request, sess,
+    urls: SegmentationUrls,
+    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,
 ):  # OOB slot updates with stats, progress, focus, and toolbar
     "Reset segments to the initial NLTK split result."
 ```
 
 ``` python
-async def _handle_seg_ai_split(
+async def _handle_seg_ai_split_result(
     state_store: WorkflowStateStore,  # The workflow state store
     workflow_id: str,  # The workflow identifier
     segmentation_service: SegmentationService,  # Service for NLTK sentence splitting
@@ -507,6 +553,18 @@ async def _handle_seg_ai_split(
     sess,  # FastHTML session object
     urls: SegmentationUrls,  # URL bundle for segmentation routes
     max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
+) -> SegMutationResult:  # Mutation result data
+    "Re-run NLTK sentence splitting on all current text. Returns data, not OOB."
+```
+
+``` python
+async def _handle_seg_ai_split(
+    state_store: WorkflowStateStore,
+    workflow_id: str,
+    segmentation_service: SegmentationService,
+    request, sess,
+    urls: SegmentationUrls,
+    max_history_depth: int = DEFAULT_MAX_HISTORY_DEPTH,
 ):  # OOB slot updates with stats, progress, focus, and toolbar
     "Re-run NLTK sentence splitting on all current text."
 ```
@@ -544,6 +602,17 @@ class SegInitResult(NamedTuple):
     
     Contains domain-specific data for the combined layer wrapper to use
     when building cross-domain OOB elements (KB system, shared chrome).
+    """
+```
+
+``` python
+class SegMutationResult(NamedTuple):
+    """
+    Result from a segmentation mutation handler (split, merge, undo, reset, NLTK split).
+    
+    Contains data for the caller to build targeted OOB responses via
+    `build_mutation_response()`. The caller controls toolbar `extra_actions`
+    and any cross-domain OOB elements (alignment status, mini-stats).
     """
 ```
 
