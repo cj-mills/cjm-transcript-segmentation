@@ -278,6 +278,7 @@ def create_demo_init_wrapper(
                 can_undo=(result.history_depth > 0),
                 visible_count=result.visible_count,
                 is_auto_mode=result.is_auto_mode,
+                nltk_split_disabled=True,  # At init, current = NLTK pre-split
             ),
             id=DemoHtmlIds.SHARED_TOOLBAR,
             hx_swap_oob="innerHTML"

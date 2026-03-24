@@ -71,6 +71,7 @@ def render_toolbar(
     visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count
     is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode
     extra_actions: Any = None,  # Additional content for the right action group
+    nltk_split_disabled: bool = False,  # Whether NLTK Split button is disabled (current = NLTK pre-split)
     oob: bool = False,  # Whether to render as OOB swap
 ) -> Any:  # Toolbar component
     """Render the segmentation toolbar with action buttons and card count selector."""
@@ -89,6 +90,7 @@ def render_toolbar(
             "NLTK Split",
             id=SegmentationHtmlIds.SEG_AI_SPLIT_BTN,
             cls=combine_classes(btn, btn_colors.secondary, btn_sizes.sm),
+            disabled="disabled" if nltk_split_disabled else None,
             hx_post=ai_split_url,
             hx_swap="none"
         ),

@@ -53,35 +53,35 @@ graph LR
 
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
-    components_segment_card --> html_ids
-    components_segment_card --> components_card_stack_config
     components_segment_card --> models
+    components_segment_card --> components_card_stack_config
+    components_segment_card --> html_ids
     components_step_renderer --> components_card_stack_config
-    components_step_renderer --> html_ids
     components_step_renderer --> utils
-    components_step_renderer --> models
-    components_step_renderer --> components_callbacks
     components_step_renderer --> components_segment_card
+    components_step_renderer --> models
+    components_step_renderer --> html_ids
+    components_step_renderer --> components_callbacks
     routes_card_stack --> components_card_stack_config
-    routes_card_stack --> routes_core
-    routes_card_stack --> models
-    routes_card_stack --> components_step_renderer
-    routes_card_stack --> utils
     routes_card_stack --> components_segment_card
+    routes_card_stack --> components_step_renderer
+    routes_card_stack --> routes_core
+    routes_card_stack --> utils
+    routes_card_stack --> models
     routes_core --> models
     routes_handlers --> services_segmentation
     routes_handlers --> components_card_stack_config
-    routes_handlers --> html_ids
-    routes_handlers --> routes_core
-    routes_handlers --> routes_card_stack
-    routes_handlers --> utils
-    routes_handlers --> models
     routes_handlers --> components_step_renderer
+    routes_handlers --> routes_core
+    routes_handlers --> models
+    routes_handlers --> utils
+    routes_handlers --> html_ids
+    routes_handlers --> routes_card_stack
     routes_init --> services_segmentation
-    routes_init --> routes_handlers
-    routes_init --> routes_core
     routes_init --> models
     routes_init --> routes_card_stack
+    routes_init --> routes_handlers
+    routes_init --> routes_core
     services_segmentation --> models
     utils --> models
 ```
@@ -413,6 +413,7 @@ def build_mutation_response(
     is_split_mode:bool=False,  # Whether split mode is active
     is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
     extra_actions:Any=None,  # Additional toolbar content (e.g., FA controls)
+    nltk_split_disabled:bool=False,  # Whether NLTK Split button is disabled
 ) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
     """
     Build the standard OOB response for mutation handlers.
@@ -1064,6 +1065,7 @@ def render_toolbar(
     visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count
     is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode
     extra_actions: Any = None,  # Additional content for the right action group
+    nltk_split_disabled: bool = False,  # Whether NLTK Split button is disabled (current = NLTK pre-split)
     oob: bool = False,  # Whether to render as OOB swap
 ) -> Any:  # Toolbar component
     "Render the segmentation toolbar with action buttons and card count selector."

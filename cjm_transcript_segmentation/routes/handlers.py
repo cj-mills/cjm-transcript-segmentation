@@ -56,6 +56,7 @@ def build_mutation_response(
     is_split_mode:bool=False,  # Whether split mode is active
     is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
     extra_actions:Any=None,  # Additional toolbar content (e.g., FA controls)
+    nltk_split_disabled:bool=False,  # Whether NLTK Split button is disabled
 ) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
     """Build the standard OOB response for mutation handlers.
     
@@ -77,7 +78,8 @@ def build_mutation_response(
     toolbar_oob = render_toolbar(
         reset_url=urls.reset, ai_split_url=urls.ai_split, undo_url=urls.undo,
         can_undo=(history_depth > 0), visible_count=visible_count,
-        is_auto_mode=is_auto_mode, extra_actions=extra_actions, oob=True,
+        is_auto_mode=is_auto_mode, extra_actions=extra_actions,
+        nltk_split_disabled=nltk_split_disabled, oob=True,
     )
     source_pos_oob = render_seg_source_position(segments, focused_index, oob=True)
 
