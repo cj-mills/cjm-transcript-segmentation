@@ -186,11 +186,10 @@ def _render_card_actions(
     return Div(
         # Merge up button
         Button(
-            lucide_icon("merge", size=4, cls=str(text_dui.base_content.opacity(60))),
+            lucide_icon("merge", size="full", cls=str(text_dui.base_content.opacity(60))),
             cls=combine_classes(
                 btn, btn_styles.ghost, btn_sizes.xs, btn_modifiers.square,
-                opacity(0), opacity(100).group("hover"), opacity(100).focus,
-                transition.opacity, tooltip, tooltip_placement.left
+                tooltip, tooltip_placement.left
             ),
             data_tip="Merge with previous",
             hx_post=merge_url,
@@ -198,23 +197,8 @@ def _render_card_actions(
             hx_swap="none"  # Only OOB swaps, no primary swap
         ) if show_merge else None,
         
-        # Split button
-        Button(
-            lucide_icon("scissors", size=4, cls=str(text_dui.base_content.opacity(60))),
-            cls=combine_classes(
-                btn, btn_styles.ghost, btn_sizes.xs, btn_modifiers.square,
-                opacity(0), opacity(100).group("hover"), opacity(100).focus,
-                transition.opacity, tooltip, tooltip_placement.left
-            ),
-            data_tip="Split segment",
-            hx_post=enter_split_url,
-            hx_vals=json.dumps({"segment_index": segment.index}),
-            hx_swap="none",  # Only OOB swaps, no primary swap
-            onclick="if(window.kbNav)window.kbNav.enterMode('split')",
-        ),
         cls=combine_classes(
-            # position.absolute, right(2), top(2),
-            flex_display, flex_direction.col, gap(1)
+            self_align.center,
         )
     )
 
@@ -277,7 +261,7 @@ def render_segment_card(
             cls=combine_classes(
                 card_body, p(3),
                 flex_display, flex_direction.row, gap(4), items.start,
-                position.relative, #p.r(12) if show_actions else ""
+                position.relative,
             )
         ),
         id=SegmentationHtmlIds.segment_card(segment.index),
