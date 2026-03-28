@@ -33,7 +33,7 @@ from cjm_fasthtml_tailwind.utilities.effects import opacity
 from cjm_fasthtml_tailwind.utilities.interactivity import cursor, select
 from cjm_fasthtml_tailwind.utilities.transitions_and_animation import transition, duration
 from cjm_fasthtml_tailwind.utilities.flexbox_and_grid import (
-    flex_display, flex_direction, flex_wrap, items, gap, grow, shrink
+    flex_display, flex_direction, flex_wrap, items, gap, grow, shrink, self_align
 )
 from cjm_fasthtml_tailwind.core.base import combine_classes
 
@@ -108,14 +108,15 @@ def _render_view_mode_content(
         Div(
             "Click to Split",
             cls=combine_classes(
-                font_size.xs, font_weight.bold, text_dui.primary,
+                font_size.xs, font_weight.bold, text_dui.primary, 
+                text_align.center, self_align.center,
                 uppercase, opacity(0), opacity(100).group("hover/text"),
-                transition.opacity, m.t(1)
+                transition.opacity, p(1)
             )
         ),
         cls=combine_classes(
             "group/text", cursor.text, border_radius.field, p(1), m.l(-1),
-            bg_dui.base_200.hover, transition.colors
+            bg_dui.base_200.hover, transition.colors, flex_display, gap(1),
         ),
         hx_post=enter_split_url,
         hx_vals=json.dumps({"segment_index": segment.index}),
@@ -212,7 +213,7 @@ def _render_card_actions(
             onclick="if(window.kbNav)window.kbNav.enterMode('split')",
         ),
         cls=combine_classes(
-            position.absolute, right(2), top(2),
+            # position.absolute, right(2), top(2),
             flex_display, flex_direction.col, gap(1)
         )
     )
@@ -274,9 +275,9 @@ def render_segment_card(
             ) if show_actions else None,
             
             cls=combine_classes(
-                card_body, p(4),
+                card_body, p(3),
                 flex_display, flex_direction.row, gap(4), items.start,
-                position.relative, p.r(12) if show_actions else ""
+                position.relative, #p.r(12) if show_actions else ""
             )
         ),
         id=SegmentationHtmlIds.segment_card(segment.index),

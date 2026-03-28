@@ -17,6 +17,8 @@ SEG_CS_CONFIG = CardStackConfig(
     prefix="sd-seg",
     disable_scroll_in_modes=("split",),
     style=CardStackStyleConfig(
+        section_gap='0.5rem',
+        slot_padding='0.25rem',
         viewport_padding_x='0.0rem', 
         viewport_padding_y='0.0rem'
     )
