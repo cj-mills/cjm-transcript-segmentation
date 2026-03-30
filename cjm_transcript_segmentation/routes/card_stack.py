@@ -14,7 +14,8 @@ from cjm_fasthtml_card_stack.core.models import CardStackState, CardStackUrls
 from cjm_fasthtml_card_stack.core.constants import DEFAULT_CARD_WIDTH
 from cjm_fasthtml_card_stack.routes.handlers import (
     build_slots_response, build_nav_response,
-    card_stack_navigate, card_stack_update_viewport, card_stack_save_width,
+    card_stack_navigate, card_stack_navigate_to_index,
+    card_stack_update_viewport, card_stack_save_width,
 )
 
 from cjm_fasthtml_interactions.core.state_store import get_session_id
@@ -118,6 +119,43 @@ def _handle_seg_navigate(
     
     result = card_stack_navigate(
         direction=direction,
+        card_items=segments,
+        state=state,
+        config=SEG_CS_CONFIG,
+        ids=SEG_CS_IDS,
+        urls=urls.card_stack,
+        render_card=renderer,
+        progress_label="Segment",
+        form_input_name="segment_index",
+    )
+    
+    _update_seg_state(state_store, workflow_id, session_id, focused_index=state.focused_index)
+    
+    # Append source position OOB if multiple sources
+    if get_source_count(segments) > 1:
+        source_pos_oob = render_seg_source_position(segments, state.focused_index, oob=True)
+        return (*result, source_pos_oob)
+    return result
+
+# %% ../../nbs/routes/card_stack.ipynb #oj6qg6sdior
+def _handle_seg_navigate_to_index(
+    state_store: WorkflowStateStore,  # The workflow state store
+    workflow_id: str,  # The workflow identifier
+    sess,  # FastHTML session object
+    target_index: int,  # Target segment index to navigate to
+    urls: SegmentationUrls,  # URL bundle for segmentation routes
+):  # OOB slot updates with progress, focus, and source position
+    """Navigate to a specific segment index in the viewport using OOB slot swaps."""
+    session_id = get_session_id(sess)
+    ctx = _load_seg_context(state_store, workflow_id, session_id)
+    segments = _to_segments(ctx.segment_dicts)
+    boundaries = get_source_boundaries(segments)
+    
+    state = _build_card_stack_state(ctx)
+    renderer = _make_renderer(urls, source_boundaries=boundaries)
+    
+    result = card_stack_navigate_to_index(
+        target_index=target_index,
         card_items=segments,
         state=state,
         config=SEG_CS_CONFIG,
@@ -275,6 +313,11 @@ def init_card_stack_router(
         """Navigate down by page."""
         return _handle_seg_navigate(state_store, workflow_id, sess, direction="page_down", urls=urls)
 
+    @router
+    def nav_to_index(request, sess, target_index: int):
+        """Navigate to a specific segment index."""
+        return _handle_seg_navigate_to_index(state_store, workflow_id, sess, target_index, urls=urls)
+
     # -------------------------------------------------------------------------
     # Viewport and Width
     # -------------------------------------------------------------------------
@@ -318,6 +361,7 @@ def init_card_stack_router(
         "nav_last": nav_last,
         "nav_page_up": nav_page_up,
         "nav_page_down": nav_page_down,
+        "nav_to_index": nav_to_index,
         "update_viewport": update_viewport,
         "save_width": save_width,
         "enter_split": enter_split,

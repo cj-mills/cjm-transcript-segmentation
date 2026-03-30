@@ -53,35 +53,35 @@ graph LR
 
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
-    components_segment_card --> models
     components_segment_card --> components_card_stack_config
     components_segment_card --> html_ids
-    components_step_renderer --> components_card_stack_config
+    components_segment_card --> models
     components_step_renderer --> components_segment_card
-    components_step_renderer --> models
+    components_step_renderer --> components_card_stack_config
     components_step_renderer --> html_ids
-    components_step_renderer --> components_callbacks
     components_step_renderer --> utils
-    routes_card_stack --> components_card_stack_config
-    routes_card_stack --> routes_core
+    components_step_renderer --> components_callbacks
+    components_step_renderer --> models
     routes_card_stack --> components_segment_card
-    routes_card_stack --> models
     routes_card_stack --> components_step_renderer
+    routes_card_stack --> routes_core
+    routes_card_stack --> components_card_stack_config
     routes_card_stack --> utils
+    routes_card_stack --> models
     routes_core --> models
-    routes_handlers --> components_card_stack_config
-    routes_handlers --> routes_core
-    routes_handlers --> models
-    routes_handlers --> components_step_renderer
-    routes_handlers --> utils
     routes_handlers --> routes_card_stack
+    routes_handlers --> components_step_renderer
     routes_handlers --> services_segmentation
+    routes_handlers --> routes_core
     routes_handlers --> html_ids
-    routes_init --> models
+    routes_handlers --> utils
+    routes_handlers --> components_card_stack_config
+    routes_handlers --> models
     routes_init --> routes_core
     routes_init --> routes_card_stack
     routes_init --> routes_handlers
     routes_init --> services_segmentation
+    routes_init --> models
     services_segmentation --> models
     utils --> models
 ```
@@ -189,6 +189,17 @@ def _handle_seg_navigate(
     urls: SegmentationUrls,  # URL bundle for segmentation routes
 ):  # OOB slot updates with progress, focus, and source position
     "Navigate to a different segment in the viewport using OOB slot swaps."
+```
+
+``` python
+def _handle_seg_navigate_to_index(
+    state_store: WorkflowStateStore,  # The workflow state store
+    workflow_id: str,  # The workflow identifier
+    sess,  # FastHTML session object
+    target_index: int,  # Target segment index to navigate to
+    urls: SegmentationUrls,  # URL bundle for segmentation routes
+):  # OOB slot updates with progress, focus, and source position
+    "Navigate to a specific segment index in the viewport using OOB slot swaps."
 ```
 
 ``` python
