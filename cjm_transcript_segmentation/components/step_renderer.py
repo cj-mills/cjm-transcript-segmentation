@@ -161,7 +161,7 @@ def render_seg_stats(
     return Div(
         Span(
             stats_text,
-            cls=combine_classes(font_size.sm, text_dui.base_content.opacity(70))
+            cls=combine_classes(font_size.sm, text_dui.base_content)
         ),
         id=SegmentationHtmlIds.SEG_STATS,
         hx_swap_oob="true" if oob else None
@@ -185,7 +185,7 @@ def render_seg_source_position(
     return Span(
         content,
         id=SegmentationHtmlIds.SEG_SOURCE_POSITION,
-        cls=combine_classes(font_size.sm, text_dui.base_content.opacity(70)),
+        cls=combine_classes(font_size.sm, text_dui.base_content),
         hx_swap_oob="true" if oob else None,
     )
 
