@@ -54,7 +54,6 @@ def build_mutation_response(
     history_depth:int,  # Current undo history depth
     urls:SegmentationUrls,  # URL bundle
     is_split_mode:bool=False,  # Whether split mode is active
-    is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
     extra_actions:tuple=(),  # Additional toolbar elements (e.g., FA controls, sync toggle)
     nltk_split_disabled:bool=False,  # Whether NLTK Split button is disabled
 ) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
@@ -77,8 +76,7 @@ def build_mutation_response(
     stats_oob = render_seg_stats(segments, oob=True)
     toolbar_oob = render_toolbar(
         reset_url=urls.reset, ai_split_url=urls.ai_split, undo_url=urls.undo,
-        can_undo=(history_depth > 0), visible_count=visible_count,
-        is_auto_mode=is_auto_mode, extra_actions=extra_actions,
+        can_undo=(history_depth > 0), extra_actions=extra_actions,
         nltk_split_disabled=nltk_split_disabled, oob=True,
     )
     source_pos_oob = render_seg_source_position(segments, focused_index, oob=True)
@@ -285,7 +283,7 @@ async def _handle_seg_split(
     )
     return (*build_mutation_response(
         result.segment_dicts, result.focused_index, result.visible_count,
-        result.history_depth, urls, is_auto_mode=result.is_auto_mode,
+        result.history_depth, urls,
     ), *result.extra_oob)
 
 # %% ../../nbs/routes/handlers.ipynb #pg4dun6ay0l
@@ -395,7 +393,7 @@ def _handle_seg_merge(
     )
     return (*build_mutation_response(
         result.segment_dicts, result.focused_index, result.visible_count,
-        result.history_depth, urls, is_auto_mode=result.is_auto_mode,
+        result.history_depth, urls,
     ), *result.extra_oob)
 
 # %% ../../nbs/routes/handlers.ipynb #dh-undo
@@ -443,7 +441,7 @@ def _handle_seg_undo(
     result = _handle_seg_undo_result(state_store, workflow_id, request, sess, urls)
     return (*build_mutation_response(
         result.segment_dicts, result.focused_index, result.visible_count,
-        result.history_depth, urls, is_auto_mode=result.is_auto_mode,
+        result.history_depth, urls,
     ), *result.extra_oob)
 
 # %% ../../nbs/routes/handlers.ipynb #dh-reset
@@ -494,7 +492,7 @@ def _handle_seg_reset(
     )
     return (*build_mutation_response(
         result.segment_dicts, result.focused_index, result.visible_count,
-        result.history_depth, urls, is_auto_mode=result.is_auto_mode,
+        result.history_depth, urls,
     ), *result.extra_oob)
 
 # %% ../../nbs/routes/handlers.ipynb #dh-ai-split
@@ -557,7 +555,7 @@ async def _handle_seg_ai_split(
     )
     return (*build_mutation_response(
         result.segment_dicts, result.focused_index, result.visible_count,
-        result.history_depth, urls, is_auto_mode=result.is_auto_mode,
+        result.history_depth, urls,
     ), *result.extra_oob)
 
 # %% ../../nbs/routes/handlers.ipynb #ul6toz93cyp

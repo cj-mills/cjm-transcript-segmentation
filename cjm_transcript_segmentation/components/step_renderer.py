@@ -30,7 +30,6 @@ from cjm_fasthtml_lucide_icons.factory import lucide_icon
 
 # Card stack library
 from cjm_fasthtml_card_stack.components.viewport import render_viewport
-from cjm_fasthtml_card_stack.components.controls import render_card_count_select
 from cjm_fasthtml_card_stack.components.progress import render_progress_indicator
 from cjm_fasthtml_card_stack.core.models import CardStackState
 from cjm_fasthtml_card_stack.core.constants import DEFAULT_VISIBLE_COUNT, DEFAULT_CARD_WIDTH
@@ -68,13 +67,11 @@ def render_toolbar(
     ai_split_url: str,  # URL for NLTK split action
     undo_url: str,  # URL for undo action
     can_undo: bool,  # Whether undo is available
-    visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count
-    is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode
     extra_actions: tuple = (),  # Additional elements for the right action group
     nltk_split_disabled: bool = False,  # Whether NLTK Split button is disabled (current = NLTK pre-split)
     oob: bool = False,  # Whether to render as OOB swap
 ) -> Any:  # Toolbar component
-    """Render the segmentation toolbar with action buttons and card count selector."""
+    """Render the segmentation toolbar with action buttons."""
     # Right group: Reset, NLTK Split, and any extra actions
     right_children = [
         Button(
@@ -112,24 +109,7 @@ def render_toolbar(
             hx_swap="none"
         ),
 
-        # Left spacer
-        Div(cls=str(grow())),
-
-        # Center: Card count selector with label
-        Div(
-            Span(
-                "Cards:",
-                cls=combine_classes(font_size.sm, text_dui.base_content.opacity(70), m.r(2))
-            ),
-            render_card_count_select(
-                SEG_CS_CONFIG, SEG_CS_IDS,
-                current_count=visible_count,
-                is_auto_mode=is_auto_mode,
-            ),
-            cls=combine_classes(flex_display, items.center)
-        ),
-
-        # Right spacer
+        # Spacer
         Div(cls=str(grow())),
 
         # Right group: action buttons + extra actions

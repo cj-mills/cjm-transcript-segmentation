@@ -63,8 +63,8 @@ from cjm_fasthtml_keyboard_navigation.components.hints import render_keyboard_hi
 
 # Card stack library
 from cjm_fasthtml_card_stack.keyboard.actions import build_card_stack_url_map
-from cjm_fasthtml_card_stack.components.controls import render_width_slider
 from cjm_fasthtml_card_stack.components.progress import render_progress_indicator
+from cjm_fasthtml_card_stack.components.settings_modal import render_card_stack_settings_modal
 from cjm_fasthtml_card_stack.core.constants import DEFAULT_VISIBLE_COUNT, DEFAULT_CARD_WIDTH
 
 # Segmentation library imports
@@ -109,8 +109,8 @@ class DemoHtmlIds:
     KEYBOARD_SYSTEM = "seg-demo-kb-system"
     SHARED_HINTS = "seg-demo-hints"
     SHARED_TOOLBAR = "seg-demo-toolbar"
-    SHARED_CONTROLS = "seg-demo-controls"
     SHARED_FOOTER = "seg-demo-footer"
+    SETTINGS_MODAL = "seg-demo-settings-modal"
 
 
 # =============================================================================
@@ -271,23 +271,30 @@ def create_demo_init_wrapper(
             hx_swap_oob="innerHTML"
         )
 
-        # Toolbar OOB
+        # Settings modal
+        settings_modal, settings_trigger = render_card_stack_settings_modal(
+            SEG_CS_CONFIG, SEG_CS_IDS,
+            current_count=result.visible_count,
+            is_auto_mode=result.is_auto_mode,
+            card_width=result.card_width,
+        )
+
+        # Toolbar OOB (includes settings trigger)
         toolbar_oob = Div(
+            settings_trigger,
             render_toolbar(
                 reset_url=urls.reset, ai_split_url=urls.ai_split, undo_url=urls.undo,
                 can_undo=(result.history_depth > 0),
-                visible_count=result.visible_count,
-                is_auto_mode=result.is_auto_mode,
                 nltk_split_disabled=True,  # At init, current = NLTK pre-split
             ),
             id=DemoHtmlIds.SHARED_TOOLBAR,
             hx_swap_oob="innerHTML"
         )
 
-        # Controls OOB (width slider)
-        controls_oob = Div(
-            render_width_slider(SEG_CS_CONFIG, SEG_CS_IDS, card_width=result.card_width),
-            id=DemoHtmlIds.SHARED_CONTROLS,
+        # Settings modal OOB
+        settings_modal_oob = Div(
+            settings_modal,
+            id=DemoHtmlIds.SETTINGS_MODAL,
             hx_swap_oob="innerHTML"
         )
 
@@ -308,7 +315,7 @@ def create_demo_init_wrapper(
 
         return (
             result.column_body, kb_system_oob, hints_oob,
-            toolbar_oob, controls_oob, footer_oob, mini_stats_oob,
+            toolbar_oob, settings_modal_oob, footer_oob, mini_stats_oob,
         )
 
     return wrapped_init
@@ -419,12 +426,8 @@ def render_demo_page(
             cls=str(p(2))
         )
 
-        controls = Div(
-            P("Width controls will appear here after initialization.",
-              cls=combine_classes(font_size.sm, text_dui.base_content.opacity(50))),
-            id=DemoHtmlIds.SHARED_CONTROLS,
-            cls=str(p(2))
-        )
+        # Settings modal container (populated by init handler)
+        settings_modal_container = Div(id=DemoHtmlIds.SETTINGS_MODAL)
 
         footer = Div(
             P("Footer with progress will appear here after initialization.",
@@ -454,7 +457,6 @@ def render_demo_page(
             # Shared chrome
             hints,
             toolbar,
-            controls,
 
             # Content area
             Div(
@@ -474,6 +476,9 @@ def render_demo_page(
 
             # Keyboard system container
             kb_container,
+
+            # Settings modal container
+            settings_modal_container,
 
             id=DemoHtmlIds.CONTAINER,
             cls=combine_classes(
