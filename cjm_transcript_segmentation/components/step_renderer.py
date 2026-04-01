@@ -70,7 +70,7 @@ def render_toolbar(
     can_undo: bool,  # Whether undo is available
     visible_count: int = DEFAULT_VISIBLE_COUNT,  # Current visible card count
     is_auto_mode: bool = False,  # Whether card count is in auto-adjust mode
-    extra_actions: Any = None,  # Additional content for the right action group
+    extra_actions: tuple = (),  # Additional elements for the right action group
     nltk_split_disabled: bool = False,  # Whether NLTK Split button is disabled (current = NLTK pre-split)
     oob: bool = False,  # Whether to render as OOB swap
 ) -> Any:  # Toolbar component
@@ -96,8 +96,8 @@ def render_toolbar(
         ),
     ]
 
-    if extra_actions is not None:
-        right_children.append(extra_actions)
+    for action in extra_actions:
+        right_children.append(action)
 
     return Div(
         # Left group: Undo button

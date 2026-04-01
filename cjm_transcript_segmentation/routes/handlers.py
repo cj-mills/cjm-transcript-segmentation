@@ -55,7 +55,7 @@ def build_mutation_response(
     urls:SegmentationUrls,  # URL bundle
     is_split_mode:bool=False,  # Whether split mode is active
     is_auto_mode:bool=False,  # Whether card count is in auto-adjust mode
-    extra_actions:Any=None,  # Additional toolbar content (e.g., FA controls)
+    extra_actions:tuple=(),  # Additional toolbar elements (e.g., FA controls, sync toggle)
     nltk_split_disabled:bool=False,  # Whether NLTK Split button is disabled
 ) -> Tuple:  # OOB elements (slots + progress + focus + stats + toolbar + source position)
     """Build the standard OOB response for mutation handlers.
