@@ -15,7 +15,7 @@ from fasthtml.common import Div, Span, Button, P
 from cjm_fasthtml_daisyui.components.actions.button import (
     btn, btn_sizes, btn_styles, btn_colors, btn_modifiers
 )
-from cjm_fasthtml_daisyui.components.data_display.card import card, card_body
+from cjm_fasthtml_daisyui.components.data_display.card import card_body
 from cjm_fasthtml_daisyui.components.data_display.kbd import kbd, kbd_sizes
 from cjm_fasthtml_daisyui.components.feedback.tooltip import tooltip, tooltip_placement
 from cjm_fasthtml_daisyui.utilities.semantic_colors import bg_dui, text_dui, border_dui
@@ -48,6 +48,9 @@ from cjm_fasthtml_card_stack.core.models import CardRenderContext
 from cjm_fasthtml_token_selector.components.tokens import render_token_grid
 from cjm_fasthtml_token_selector.helpers.tokenizer import tokenize
 from cjm_fasthtml_token_selector.core.models import TokenSelectorState
+
+# Design system recipes (V10 P5 content_card)
+from cjm_fasthtml_design_system.panels import panels
 
 # HTML IDs (page-specific)
 from ..html_ids import SegmentationHtmlIds
@@ -266,8 +269,7 @@ def render_segment_card(
         ),
         id=SegmentationHtmlIds.segment_card(segment.index),
         cls=combine_classes(
-            card, "segment-card", "group",
-            bg_dui.base_100, 
+            panels.content_card, "segment-card", "group",
             w.full,
             transition.all,
             duration(200),

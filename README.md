@@ -53,32 +53,32 @@ graph LR
 
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
-    components_segment_card --> html_ids
     components_segment_card --> models
+    components_segment_card --> html_ids
     components_segment_card --> components_card_stack_config
-    components_step_renderer --> components_segment_card
+    components_step_renderer --> utils
+    components_step_renderer --> models
     components_step_renderer --> components_callbacks
     components_step_renderer --> html_ids
-    components_step_renderer --> models
+    components_step_renderer --> components_segment_card
     components_step_renderer --> components_card_stack_config
-    components_step_renderer --> utils
-    routes_card_stack --> components_segment_card
-    routes_card_stack --> utils
     routes_card_stack --> routes_core
-    routes_card_stack --> components_card_stack_config
+    routes_card_stack --> utils
     routes_card_stack --> models
     routes_card_stack --> components_step_renderer
+    routes_card_stack --> components_segment_card
+    routes_card_stack --> components_card_stack_config
     routes_core --> models
-    routes_handlers --> components_step_renderer
     routes_handlers --> routes_core
-    routes_handlers --> routes_card_stack
-    routes_handlers --> html_ids
     routes_handlers --> models
     routes_handlers --> utils
-    routes_handlers --> components_card_stack_config
     routes_handlers --> services_segmentation
-    routes_init --> services_segmentation
+    routes_handlers --> components_step_renderer
+    routes_handlers --> html_ids
+    routes_handlers --> components_card_stack_config
+    routes_handlers --> routes_card_stack
     routes_init --> routes_handlers
+    routes_init --> services_segmentation
     routes_init --> models
     routes_init --> routes_core
     routes_init --> routes_card_stack
