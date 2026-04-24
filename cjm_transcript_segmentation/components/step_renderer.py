@@ -28,6 +28,9 @@ from cjm_fasthtml_tailwind.core.base import combine_classes
 # Lucide icons
 from cjm_fasthtml_lucide_icons.factory import lucide_icon
 
+# Design system recipes (V11 icon-size roles)
+from cjm_fasthtml_design_system.icons import icons
+
 # Card stack library
 from cjm_fasthtml_card_stack.components.viewport import render_viewport
 from cjm_fasthtml_card_stack.components.progress import render_progress_indicator
@@ -75,7 +78,7 @@ def render_toolbar(
     # Right group: Reset, NLTK Split, and any extra actions
     right_children = [
         Button(
-            lucide_icon("rotate-ccw", size=4, cls=str(m.r(2))),
+            lucide_icon("rotate-ccw", size=icons.text_button, cls=str(m.r(2))),
             "Reset",
             id=SegmentationHtmlIds.SEG_RESET_BTN,
             cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
@@ -83,7 +86,7 @@ def render_toolbar(
             hx_swap="none"
         ),
         Button(
-            lucide_icon("sparkles", size=4, cls=str(m.r(2))),
+            lucide_icon("sparkles", size=icons.text_button, cls=str(m.r(2))),
             "NLTK Split",
             id=SegmentationHtmlIds.SEG_AI_SPLIT_BTN,
             cls=combine_classes(btn, btn_colors.secondary, btn_sizes.sm),
@@ -101,7 +104,7 @@ def render_toolbar(
         # Note: no id= here — the keyboard system owns the "sd-seg-undo-btn" ID
         # for its hidden action button. This visible button works via hx_post directly.
         Button(
-            lucide_icon("undo-2", size=4, cls=str(m.r(2))),
+            lucide_icon("undo-2", size=icons.text_button, cls=str(m.r(2))),
             "Undo",
             cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
             disabled=None if can_undo else "disabled",

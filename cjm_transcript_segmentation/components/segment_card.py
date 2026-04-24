@@ -49,8 +49,9 @@ from cjm_fasthtml_token_selector.components.tokens import render_token_grid
 from cjm_fasthtml_token_selector.helpers.tokenizer import tokenize
 from cjm_fasthtml_token_selector.core.models import TokenSelectorState
 
-# Design system recipes (V10 P5 content_card)
+# Design system recipes (V10 P5 content_card, V11 icon-size roles)
 from cjm_fasthtml_design_system.panels import panels
+from cjm_fasthtml_design_system.icons import icons
 
 # HTML IDs (page-specific)
 from ..html_ids import SegmentationHtmlIds
@@ -148,7 +149,7 @@ def _render_split_mode_content(
         # Action buttons
         Div(
             Button(
-                lucide_icon("scissors", size=4, cls=str(m.r(2))),
+                lucide_icon("scissors", size=icons.text_button, cls=str(m.r(2))),
                 "Split Here",
                 cls=combine_classes(btn, btn_colors.primary, btn_sizes.sm, w(40)),
                 hx_post=split_url,
@@ -187,9 +188,9 @@ def _render_card_actions(
 ) -> Any:  # Card actions component
     """Render hover-visible action buttons."""
     return Div(
-        # Merge up button
+        # Merge up button — V11 ghost_button (icon-only ghost on focused card, no adjacent button neighbors)
         Button(
-            lucide_icon("merge", size="full", cls=str(text_dui.base_content.opacity(60))),
+            lucide_icon("merge", size=icons.ghost_button, cls=str(text_dui.base_content.opacity(60))),
             cls=combine_classes(
                 btn, btn_styles.ghost, btn_sizes.xs, btn_modifiers.square,
                 tooltip, tooltip_placement.left
