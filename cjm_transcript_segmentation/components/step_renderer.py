@@ -12,7 +12,6 @@ from typing import Any, List, Optional
 from fasthtml.common import Div, Button, Span
 
 # DaisyUI components
-from cjm_fasthtml_daisyui.components.actions.button import btn, btn_sizes, btn_styles, btn_colors
 from cjm_fasthtml_daisyui.utilities.semantic_colors import text_dui
 
 # Tailwind utilities
@@ -28,7 +27,8 @@ from cjm_fasthtml_tailwind.core.base import combine_classes
 # Lucide icons
 from cjm_fasthtml_lucide_icons.factory import lucide_icon
 
-# Design system recipes (V11 icon-size roles)
+# Design system recipes (V1 button roles, V11 icon-size roles)
+from cjm_fasthtml_design_system.buttons import buttons
 from cjm_fasthtml_design_system.icons import icons
 
 # Card stack library
@@ -81,7 +81,7 @@ def render_toolbar(
             lucide_icon("rotate-ccw", size=icons.text_button, cls=str(m.r(2))),
             "Reset",
             id=SegmentationHtmlIds.SEG_RESET_BTN,
-            cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
+            cls=buttons.soft_utility,
             hx_post=reset_url,
             hx_swap="none"
         ),
@@ -89,7 +89,7 @@ def render_toolbar(
             lucide_icon("sparkles", size=icons.text_button, cls=str(m.r(2))),
             "NLTK Split",
             id=SegmentationHtmlIds.SEG_AI_SPLIT_BTN,
-            cls=combine_classes(btn, btn_colors.secondary, btn_sizes.sm),
+            cls=buttons.soft_utility,
             disabled="disabled" if nltk_split_disabled else None,
             hx_post=ai_split_url,
             hx_swap="none"
@@ -106,7 +106,7 @@ def render_toolbar(
         Button(
             lucide_icon("undo-2", size=icons.text_button, cls=str(m.r(2))),
             "Undo",
-            cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
+            cls=buttons.soft_utility,
             disabled=None if can_undo else "disabled",
             hx_post=undo_url,
             hx_swap="none"

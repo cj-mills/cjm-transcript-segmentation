@@ -12,9 +12,7 @@ import json
 from fasthtml.common import Div, Span, Button, P
 
 # DaisyUI components
-from cjm_fasthtml_daisyui.components.actions.button import (
-    btn, btn_sizes, btn_styles, btn_colors, btn_modifiers
-)
+from cjm_fasthtml_daisyui.components.actions.button import btn_modifiers
 from cjm_fasthtml_daisyui.components.data_display.card import card_body
 from cjm_fasthtml_daisyui.components.data_display.kbd import kbd, kbd_sizes
 from cjm_fasthtml_daisyui.components.feedback.tooltip import tooltip, tooltip_placement
@@ -49,7 +47,8 @@ from cjm_fasthtml_token_selector.components.tokens import render_token_grid
 from cjm_fasthtml_token_selector.helpers.tokenizer import tokenize
 from cjm_fasthtml_token_selector.core.models import TokenSelectorState
 
-# Design system recipes (V10 P5 content_card, V11 icon-size roles)
+# Design system recipes (V1 button roles, V10 P5 content_card, V11 icon-size roles)
+from cjm_fasthtml_design_system.buttons import buttons
 from cjm_fasthtml_design_system.panels import panels
 from cjm_fasthtml_design_system.icons import icons
 
@@ -151,7 +150,7 @@ def _render_split_mode_content(
             Button(
                 lucide_icon("scissors", size=icons.text_button, cls=str(m.r(2))),
                 "Split Here",
-                cls=combine_classes(btn, btn_colors.primary, btn_sizes.sm, w(40)),
+                cls=combine_classes(buttons.primary_action, w(40)),
                 hx_post=split_url,
                 hx_vals=json.dumps({"segment_index": segment.index}),
                 hx_include=f"#{SEG_TS_IDS.anchor_input}",
@@ -160,7 +159,7 @@ def _render_split_mode_content(
             ),
             Button(
                 "Cancel",
-                cls=combine_classes(btn, btn_styles.ghost, btn_sizes.sm),
+                cls=buttons.soft_dismissal,
                 hx_post=exit_split_url,
                 hx_swap="none",
                 onclick="if(window.kbNav)window.kbNav.exitMode()",
@@ -188,11 +187,12 @@ def _render_card_actions(
 ) -> Any:  # Card actions component
     """Render hover-visible action buttons."""
     return Div(
-        # Merge up button — V11 ghost_button (icon-only ghost on focused card, no adjacent button neighbors)
+        # Merge up button — V1 item_remove (mutates collection by merging with previous segment)
+        # paired with V11 ghost_button (icon-only ghost on focused card, no adjacent button neighbors)
         Button(
             lucide_icon("merge", size=icons.ghost_button, cls=str(text_dui.base_content.opacity(60))),
             cls=combine_classes(
-                btn, btn_styles.ghost, btn_sizes.xs, btn_modifiers.square,
+                buttons.item_remove, btn_modifiers.square,
                 tooltip, tooltip_placement.left
             ),
             data_tip="Merge with previous",
