@@ -19,6 +19,8 @@ from cjm_fasthtml_daisyui.components.feedback.tooltip import tooltip, tooltip_pl
 from cjm_fasthtml_daisyui.utilities.semantic_colors import bg_dui, text_dui, border_dui
 from cjm_fasthtml_daisyui.utilities.border_radius import border_radius
 
+from cjm_fasthtml_design_system.text_tiers import text_tiers
+
 # Tailwind utilities
 from cjm_fasthtml_tailwind.utilities.spacing import p, m
 from cjm_fasthtml_tailwind.utilities.sizing import w, min_h
@@ -89,7 +91,7 @@ def _render_view_mode_content(
     is_focused = card_role == "focused"
     
     # Text styling based on card role
-    text_cls = text_dui.base_content if is_focused else text_dui.base_content.opacity(80)
+    text_cls = text_dui.base_content if is_focused else text_tiers.secondary
     
     # For context cards, render simple non-interactive content
     if card_role == "context":
@@ -167,7 +169,7 @@ def _render_split_mode_content(
             Div(
                 "Press ",
                 Span("Enter", cls=combine_classes(kbd, kbd_sizes.xs)),
-                cls=combine_classes(font_size.xs, text_dui.base_content.opacity(50), m.l.auto)
+                cls=combine_classes(font_size.xs, text_tiers.muted, m.l.auto)
             ),
             id=SegmentationHtmlIds.SPLIT_MODE_ACTIONS,
             cls=combine_classes(
@@ -190,7 +192,7 @@ def _render_card_actions(
         # Merge up button — V1 item_remove (mutates collection by merging with previous segment)
         # paired with V11 ghost_button (icon-only ghost on focused card, no adjacent button neighbors)
         Button(
-            lucide_icon("merge", size=icons.ghost_button, cls=str(text_dui.base_content.opacity(60))),
+            lucide_icon("merge", size=icons.ghost_button, cls=text_tiers.tertiary),
             cls=combine_classes(
                 buttons.item_remove, btn_modifiers.square,
                 tooltip, tooltip_placement.left
