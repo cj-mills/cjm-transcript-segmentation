@@ -49,10 +49,14 @@ def create_seg_kb_parts(
     ZoneManager by the combined-level keyboard config.
     """
     # Card stack zone from library — no data_attributes needed since
-    # onCardFocusChange callback updates the card stack's hidden input directly
+    # onCardFocusChange callback updates the card stack's hidden input directly.
+    # The `label` drives per-zone section headers in the keyboard-hints modal
+    # (cjm-fasthtml-keyboard-navigation 0.0.22+) — appears as
+    # "Text Segmentation — Navigation" / "Text Segmentation — Split Mode" / etc.
     card_zone = create_card_stack_focus_zone(
         ids=ids,
         on_focus_change="onCardFocusChange",
+        label="Text Segmentation",
     )
     zone_id = card_zone.id
 
