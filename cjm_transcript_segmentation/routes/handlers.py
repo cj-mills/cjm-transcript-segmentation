@@ -8,7 +8,8 @@ __all__ = ['DEBUG_SEG_HANDLERS', 'build_mutation_response', 'SegInitResult', 'Se
 # %% ../../nbs/routes/handlers.ipynb #dh-imports
 from typing import List, Dict, Any, Tuple, Callable, Optional, NamedTuple
 
-from fasthtml.common import APIRouter, Script, Div
+from fasthtml.common import Script, Div
+from cjm_fasthtml_app_core.core.routing import APIRouter
 
 from cjm_fasthtml_card_stack.core.models import CardStackState
 from cjm_fasthtml_card_stack.core.constants import DEFAULT_VISIBLE_COUNT, DEFAULT_CARD_WIDTH

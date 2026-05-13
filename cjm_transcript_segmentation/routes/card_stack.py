@@ -8,7 +8,7 @@ __all__ = ['init_card_stack_router']
 # %% ../../nbs/routes/card_stack.ipynb #cs-imports
 from typing import List, Dict, Any, Tuple, Set, Callable
 
-from fasthtml.common import APIRouter
+from cjm_fasthtml_app_core.core.routing import APIRouter
 
 from cjm_fasthtml_card_stack.core.models import CardStackState, CardStackUrls
 from cjm_fasthtml_card_stack.core.constants import DEFAULT_CARD_WIDTH
