@@ -6,14 +6,14 @@ and keyboard navigation. Works standalone without the full transcript workflow.
 Run with: python demo_app.py
 """
 
-from typing import List, Dict, Any, Callable, Tuple
+from typing import List, Dict, Any, Callable, Tuple, Optional
 from functools import wraps
 import asyncio
 
 from fasthtml.common import (
     fast_app, Div, H1, H2, P, Span, Button, Input, Script,
-    APIRouter,
 )
+from cjm_fasthtml_app_core.core.routing import APIRouter
 
 # DaisyUI components
 from cjm_fasthtml_daisyui.core.resources import get_daisyui_headers
@@ -209,8 +209,14 @@ class MockSourceService:
 
 def create_demo_init_wrapper(
     urls: SegmentationUrls,
+    state_initializer: Optional[Callable] = None,
 ) -> Callable:
-    """Create wrapper for seg init that builds KB system (no alignment column)."""
+    """Create wrapper for seg init that builds KB system (no alignment column).
+
+    The optional state_initializer callable is invoked at the start of every
+    init request to ensure demo state is bootstrapped — preserves the safety
+    net the prior override-route pattern had via its direct init_demo_state call.
+    """
 
     async def wrapped_init(
         state_store: SQLiteWorkflowStateStore,
@@ -224,6 +230,8 @@ def create_demo_init_wrapper(
         card_width: int = DEFAULT_CARD_WIDTH,
     ):
         """Wrapped init that adds KB system and chrome."""
+        if state_initializer:
+            state_initializer(sess)
         # Call pure domain handler
         result: SegInitResult = await _handle_seg_init(
             state_store, workflow_id, source_service, segmentation_service,
@@ -571,15 +579,23 @@ def main():
     # -------------------------------------------------------------------------
     # Set up segmentation routes
     # -------------------------------------------------------------------------
-    # Create wrapped handlers
+    from cjm_transcript_segmentation.routes.init import compute_segmentation_urls
     from cjm_transcript_segmentation.routes.handlers import (
         _handle_seg_split, _handle_seg_merge, _handle_seg_undo,
         _handle_seg_reset, _handle_seg_ai_split,
     )
 
-    # We'll create the init wrapper after we have URLs
-    # For now, set up routes with pass-through wrappers for mutations
+    # Compute URLs upfront so we can build the init wrapper before
+    # init_segmentation_routers runs. Resolves the chicken-and-egg between
+    # wrapper construction (needs URLs) and URL bundle (populated on route
+    # registration). Passing both wrapped_handlers AND urls= to
+    # init_segmentation_routers binds wrappers natively — no duplicate-route
+    # override pattern, no resolution-order fragility under FastHTML 0.14+.
+    seg_urls = compute_segmentation_urls(prefix="/seg")
+    wrapped_init = create_demo_init_wrapper(seg_urls, state_initializer=init_demo_state)
+
     wrapped_handlers = {
+        "init": wrapped_init,
         "split": wrap_mutation_handler(_handle_seg_split),
         "merge": wrap_mutation_handler(_handle_seg_merge),
         "undo": wrap_mutation_handler(_handle_seg_undo),
@@ -587,7 +603,7 @@ def main():
         "ai_split": wrap_mutation_handler(_handle_seg_ai_split),
     }
 
-    # Initialize routers
+    # Initialize routers — wrappers (init + mutations) bind via wrapped_handlers
     seg_routers, seg_urls, seg_routes = init_segmentation_routers(
         state_store=state_store,
         workflow_id=workflow_id,
@@ -595,22 +611,8 @@ def main():
         segmentation_service=segmentation_service,
         prefix="/seg",
         wrapped_handlers=wrapped_handlers,
+        urls=seg_urls,
     )
-
-    # Now create and register the wrapped init handler
-    wrapped_init = create_demo_init_wrapper(seg_urls)
-
-    # Override the init route with our wrapped version
-    init_router = APIRouter(prefix="/seg/workflow")
-
-    @init_router
-    async def init(request, sess):
-        """Initialize segments with KB system."""
-        init_demo_state(sess)
-        return await wrapped_init(
-            state_store, workflow_id, source_service, segmentation_service,
-            request, sess, urls=seg_urls,
-        )
 
     # -------------------------------------------------------------------------
     # Page routes
@@ -626,7 +628,7 @@ def main():
     # -------------------------------------------------------------------------
     # Register routes
     # -------------------------------------------------------------------------
-    register_routes(app, router, init_router, *seg_routers)
+    register_routes(app, router, *seg_routers)
 
     # Debug output
     print("\n" + "=" * 70)

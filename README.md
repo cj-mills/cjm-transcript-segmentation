@@ -53,35 +53,35 @@ graph LR
 
     components_helpers --> models
     components_keyboard_config --> components_card_stack_config
-    components_segment_card --> models
     components_segment_card --> components_card_stack_config
     components_segment_card --> html_ids
-    components_step_renderer --> models
-    components_step_renderer --> utils
+    components_segment_card --> models
     components_step_renderer --> components_card_stack_config
-    components_step_renderer --> components_segment_card
+    components_step_renderer --> utils
+    components_step_renderer --> models
     components_step_renderer --> html_ids
     components_step_renderer --> components_callbacks
-    routes_card_stack --> routes_core
+    components_step_renderer --> components_segment_card
     routes_card_stack --> utils
     routes_card_stack --> components_card_stack_config
-    routes_card_stack --> components_segment_card
-    routes_card_stack --> components_step_renderer
     routes_card_stack --> models
+    routes_card_stack --> routes_core
+    routes_card_stack --> components_step_renderer
+    routes_card_stack --> components_segment_card
     routes_core --> models
-    routes_handlers --> routes_core
-    routes_handlers --> routes_card_stack
+    routes_handlers --> components_card_stack_config
+    routes_handlers --> utils
     routes_handlers --> services_segmentation
     routes_handlers --> models
-    routes_handlers --> components_card_stack_config
+    routes_handlers --> routes_core
+    routes_handlers --> routes_card_stack
     routes_handlers --> components_step_renderer
     routes_handlers --> html_ids
-    routes_handlers --> utils
     routes_init --> routes_core
     routes_init --> routes_handlers
-    routes_init --> models
     routes_init --> services_segmentation
     routes_init --> routes_card_stack
+    routes_init --> models
     services_segmentation --> models
     utils --> models
 ```
@@ -741,11 +741,30 @@ class SegmentationHtmlIds:
 ``` python
 from cjm_transcript_segmentation.routes.init import (
     WrappedHandlers,
+    compute_segmentation_urls,
     init_segmentation_routers
 )
 ```
 
 #### Functions
+
+``` python
+def compute_segmentation_urls(
+    prefix:str,  # Base prefix for segmentation routes (e.g., "/workflow/seg")
+) -> SegmentationUrls:  # Fully populated URL bundle (no routes registered)
+    """
+    Compute the URL bundle for segmentation routes from a prefix.
+    
+    Returns the same SegmentationUrls that `init_segmentation_routers(prefix=prefix)`
+    would populate, without registering any routes. Lets consumers (e.g., page-centric
+    libraries that wrap segmentation) build wrapped handlers BEFORE calling
+    init_segmentation_routers, resolving the chicken-and-egg dependency between
+    URL bundle and wrapper construction.
+    
+    The URL conventions encoded here are the public contract of init_segmentation_routers
+    and stay synchronized via the test cell below.
+    """
+```
 
 ``` python
 def init_segmentation_routers(
@@ -756,6 +775,7 @@ def init_segmentation_routers(
     prefix:str,  # Base prefix for segmentation routes (e.g., "/workflow/seg")
     max_history_depth:int=DEFAULT_MAX_HISTORY_DEPTH,  # Maximum history stack depth
     wrapped_handlers:WrappedHandlers=None,  # Dict with 'init', 'split', 'merge', 'undo', 'reset', 'ai_split' keys
+    urls:Optional[SegmentationUrls]=None,  # Pre-populated URL bundle (e.g., from compute_segmentation_urls); created if None
 ) -> Tuple[List[APIRouter], SegmentationUrls, Dict[str, Callable]]:  # (routers, urls, merged_routes)
     """
     Initialize and return all segmentation routers with URL bundle.
@@ -763,6 +783,12 @@ def init_segmentation_routers(
     The wrapped_handlers dict should contain handlers that already have
     cross-domain concerns (KB system, alignment status) handled by the
     combined layer's wrapper factories.
+    
+    The `urls` parameter accepts a pre-populated SegmentationUrls (typically from
+    `compute_segmentation_urls(prefix)`) so consumers can build wrapped handlers
+    that need URLs before init_segmentation_routers runs. Default behavior
+    (urls=None) is unchanged from before — an empty SegmentationUrls is created
+    internally and populated after routes are registered.
     """
 ```
 
